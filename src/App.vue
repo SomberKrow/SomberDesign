@@ -15,7 +15,6 @@ import inSnowLayer from './components/inSnowLayer.vue'
     <div class="winterSky" aria-hidden="true">
       <div class="winterSky__imageGrade"></div>
       <div class="winterSky__horizon"></div>
-      <div class="winterSky__moon"></div>
       <div class="winterSky__cloud winterSky__cloud--one"></div>
       <div class="winterSky__cloud winterSky__cloud--two"></div>
       <div class="winterSky__grain"></div>
@@ -58,14 +57,11 @@ import inSnowLayer from './components/inSnowLayer.vue'
   z-index: -5;
   overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 72% 14%, rgba(226, 232, 238, 0.1) 0 8rem, transparent 17rem),
-    linear-gradient(180deg, #151a20 0%, #0d1218 44%, #080c11 78%, #04070b 100%);
+  background: linear-gradient(180deg, #14191f 0%, #0c1117 48%, #06090d 100%);
 }
 
 .winterSky__imageGrade,
 .winterSky__horizon,
-.winterSky__moon,
 .winterSky__cloud,
 .winterSky__grain,
 .winterSky__vignette {
@@ -74,14 +70,14 @@ import inSnowLayer from './components/inSnowLayer.vue'
 }
 
 .winterSky__imageGrade {
-  inset: -3vh -3vw;
+  inset: -2vh -2vw;
   background:
-    linear-gradient(180deg, rgba(9, 13, 18, 0.34), rgba(9, 13, 18, 0.56) 48%, rgba(4, 7, 11, 0.86)),
-    linear-gradient(90deg, rgba(181, 190, 198, 0.08), rgba(123, 135, 145, 0.04)),
+    linear-gradient(180deg, rgba(10, 14, 18, 0.12), rgba(10, 14, 18, 0.24) 48%, rgba(4, 7, 11, 0.56)),
+    linear-gradient(90deg, rgba(188, 196, 204, 0.06), rgba(111, 122, 132, 0.03)),
     url('/assets/images/graykrowForest.png') center 82% / cover no-repeat;
-  filter: grayscale(0.58) saturate(0.48) brightness(0.72) contrast(0.92);
-  opacity: 0.64;
-  transform: scale(1.035);
+  filter: grayscale(0.52) saturate(0.55) brightness(0.92) contrast(0.9);
+  opacity: 0.94;
+  transform: scale(1.025);
 }
 
 .winterSky__imageGrade::after {
@@ -89,42 +85,30 @@ import inSnowLayer from './components/inSnowLayer.vue'
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 22%, rgba(220, 226, 232, 0.075), transparent 34%),
-    linear-gradient(180deg, rgba(174, 185, 195, 0.1), rgba(85, 96, 107, 0.075) 42%, rgba(4, 7, 11, 0.68));
+    radial-gradient(circle at 50% 22%, rgba(224, 229, 234, 0.045), transparent 34%),
+    linear-gradient(180deg, rgba(184, 192, 200, 0.07), rgba(90, 100, 110, 0.035) 42%, rgba(4, 7, 11, 0.38));
   mix-blend-mode: screen;
-  opacity: 0.42;
+  opacity: 0.28;
 }
 
 .winterSky__horizon {
   left: -10vw;
   right: -10vw;
-  bottom: -17vh;
-  height: 46vh;
+  bottom: -19vh;
+  height: 42vh;
   background:
-    linear-gradient(180deg, transparent 0%, rgba(168, 178, 187, 0.07) 35%, rgba(223, 229, 234, 0.08) 100%),
-    radial-gradient(ellipse at 50% 0%, rgba(213, 221, 229, 0.13), transparent 64%);
-  filter: blur(20px);
-}
-
-.winterSky__moon {
-  top: clamp(5rem, 12vh, 8rem);
-  right: clamp(2rem, 10vw, 10rem);
-  width: clamp(5.5rem, 10vw, 8.5rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 38% 34%, rgba(245, 247, 249, 0.82), rgba(210, 217, 224, 0.4) 38%, rgba(210, 217, 224, 0.1) 62%, transparent 70%);
-  filter: blur(0.35px);
-  opacity: 0.34;
+    linear-gradient(180deg, transparent 0%, rgba(168, 178, 187, 0.055) 35%, rgba(223, 229, 234, 0.06) 100%),
+    radial-gradient(ellipse at 50% 0%, rgba(213, 221, 229, 0.1), transparent 64%);
+  filter: blur(22px);
 }
 
 .winterSky__cloud {
   width: 62vw;
   height: 18vh;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(218, 225, 232, 0.055), transparent);
-  filter: blur(24px);
-  opacity: 0.54;
+  background: linear-gradient(90deg, transparent, rgba(218, 225, 232, 0.04), transparent);
+  filter: blur(26px);
+  opacity: 0.34;
   animation: cloudDrift 34s var(--ease-soft) infinite alternate;
 }
 
@@ -137,25 +121,25 @@ import inSnowLayer from './components/inSnowLayer.vue'
   top: 42vh;
   right: -26vw;
   width: 70vw;
-  opacity: 0.36;
+  opacity: 0.26;
   animation-duration: 42s;
   animation-direction: alternate-reverse;
 }
 
 .winterSky__grain {
   inset: 0;
-  opacity: 0.1;
+  opacity: 0.08;
   background-image:
-    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.24) 0 0.7px, transparent 0.8px),
-    radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.12) 0 0.8px, transparent 0.9px);
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.2) 0 0.7px, transparent 0.8px),
+    radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.1) 0 0.8px, transparent 0.9px);
   background-size: 6px 6px, 9px 9px;
 }
 
 .winterSky__vignette {
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 7, 11, 0.18), transparent 20%, rgba(4, 7, 11, 0.72)),
-    radial-gradient(circle at 50% 24%, transparent 0%, rgba(4, 7, 11, 0.24) 52%, rgba(4, 7, 11, 0.78) 100%);
+    linear-gradient(180deg, rgba(4, 7, 11, 0.08), transparent 20%, rgba(4, 7, 11, 0.54)),
+    radial-gradient(circle at 50% 24%, transparent 0%, rgba(4, 7, 11, 0.14) 52%, rgba(4, 7, 11, 0.58) 100%);
 }
 
 @keyframes cloudDrift {
@@ -169,18 +153,14 @@ import inSnowLayer from './components/inSnowLayer.vue'
 }
 
 @media (max-width: 700px) {
-  .winterSky__moon {
-    right: -1.5rem;
-    opacity: 0.24;
-  }
-
   .winterSky__cloud {
     width: 95vw;
   }
 
   .winterSky__imageGrade {
     background-position: center bottom;
-    opacity: 0.5;
+    filter: grayscale(0.5) saturate(0.55) brightness(0.86) contrast(0.9);
+    opacity: 0.84;
   }
 }
 </style>
