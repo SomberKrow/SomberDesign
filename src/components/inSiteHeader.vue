@@ -1,7 +1,9 @@
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const isMenuOpen = ref(false)
+const activeSection = ref('hero')
+let observer
 
 const navItems = [
   { id: 'hero', label: 'Index' },
@@ -30,14 +32,43 @@ const handleKeydown = event => {
   }
 }
 
+const setupActiveSectionObserver = () => {
+  const sections = document.querySelectorAll('[data-section]')
+
+  observer = new IntersectionObserver(
+    entries => {
+      const visibleEntries = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+      if (visibleEntries[0]?.target?.id) {
+        activeSection.value = visibleEntries[0].target.id
+      }
+    },
+    {
+      rootMargin: '-28% 0px -52% 0px',
+      threshold: [0.1, 0.25, 0.5, 0.75],
+    },
+  )
+
+  sections.forEach(section => observer.observe(section))
+}
+
+watch(isMenuOpen, isOpen => {
+  document.body.classList.toggle('nav-open', isOpen)
+})
+
 onMounted(() => {
   window.addEventListener('resize', handleResize)
   window.addEventListener('keydown', handleKeydown)
+  setupActiveSectionObserver()
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
   window.removeEventListener('keydown', handleKeydown)
+  document.body.classList.remove('nav-open')
+  observer?.disconnect()
 })
 </script>
 
@@ -48,7 +79,7 @@ onBeforeUnmount(() => {
         <img class="siteHeader__logo" src="/assets/images/SomberDesignLogo.png" alt="Somber.Design logo" />
         <div class="siteHeader__identity">
           <p class="siteHeader__wordmark">Somber.Design</p>
-          <p class="siteHeader__meta">Design × Frontend × Systems</p>
+          <p class="siteHeader__meta">Winter Gray Interface Work</p>
         </div>
       </a>
 
@@ -71,9 +102,10 @@ onBeforeUnmount(() => {
           :key="item.id"
           :href="`#${item.id}`"
           class="siteHeader__link"
+          :class="{ isActive: activeSection === item.id }"
           @click="closeMenu"
         >
-          {{ item.label }}
+          <span>{{ item.label }}</span>
         </a>
       </nav>
     </div>
@@ -93,7 +125,7 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 0;
   z-index: 80;
-  padding-top: 0.7rem;
+  padding-top: 0.65rem;
 }
 
 .siteHeader__inner {
@@ -102,43 +134,47 @@ onBeforeUnmount(() => {
   align-items: center;
   min-height: var(--header-height);
   overflow: visible;
-  background: rgba(7, 9, 13, 0.88);
-  backdrop-filter: blur(8px);
+  background:
+    linear-gradient(180deg, rgba(15, 23, 32, 0.88), rgba(7, 11, 16, 0.78)),
+    rgba(7, 11, 16, 0.74);
+  backdrop-filter: blur(16px) saturate(118%);
 }
 
 .siteHeader__brand {
   grid-column: 1 / span 5;
   display: inline-flex;
-  gap: 0.8rem;
+  gap: 0.75rem;
   align-items: center;
   min-width: 0;
-  padding-left: 1rem;
+  padding-left: 0.85rem;
+}
+
+.siteHeader__logo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 1.5rem rgba(200, 213, 223, 0.14));
 }
 
 .siteHeader__identity {
   min-width: 0;
 }
 
-.siteHeader__logo {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
 .siteHeader__wordmark {
   font-family: var(--font-display);
-  font-size: 1.08rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .siteHeader__meta {
   overflow: hidden;
   color: var(--color-ink-muted);
   font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.11em;
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
@@ -148,30 +184,56 @@ onBeforeUnmount(() => {
   grid-column: 7 / -1;
   display: inline-flex;
   justify-self: end;
-  height: 100%;
+  align-self: stretch;
+  gap: 0.2rem;
+  padding: 0.35rem;
 }
 
 .siteHeader__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  min-width: 7.25rem;
-  padding: 0 1rem;
-  border-left: 1px solid rgba(243, 245, 248, 0.1);
+  min-width: 5.9rem;
+  padding: 0 0.85rem;
   color: var(--color-ink-dim);
   font-family: var(--font-mono);
-  font-size: 0.69rem;
+  font-size: 0.66rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.siteHeader__link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.siteHeader__link span {
+  position: relative;
+  z-index: 1;
 }
 
 .siteHeader__link:hover,
-.siteHeader__link:focus-visible {
+.siteHeader__link:focus-visible,
+.siteHeader__link.isActive {
   color: var(--color-ink);
-  background: rgba(243, 245, 248, 0.08);
-  outline: none;
+}
+
+.siteHeader__link:hover::before,
+.siteHeader__link:focus-visible::before,
+.siteHeader__link.isActive::before {
+  border-color: var(--color-line);
+  background: rgba(223, 232, 241, 0.06);
 }
 
 .siteHeader__menuButton,
@@ -186,11 +248,11 @@ onBeforeUnmount(() => {
 
   .siteHeader__brand {
     grid-column: 1 / span 9;
-    padding-left: 0.85rem;
+    padding-left: 0.75rem;
   }
 
   .siteHeader__meta {
-    font-size: 0.61rem;
+    font-size: 0.58rem;
   }
 
   .siteHeader__menuButton {
@@ -201,11 +263,12 @@ onBeforeUnmount(() => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border: 0;
-    border-left: 1px solid rgba(243, 245, 248, 0.12);
+    border-left: 1px solid rgba(223, 232, 241, 0.12);
     background: transparent;
+    color: var(--color-ink);
     cursor: pointer;
   }
 
@@ -213,9 +276,9 @@ onBeforeUnmount(() => {
     position: absolute;
     width: 18px;
     height: 1px;
-    background: var(--color-ink);
+    background: currentColor;
     transform-origin: center;
-    transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-fast) var(--ease-out);
+    transition: transform var(--duration-fast) var(--ease-out);
   }
 
   .siteHeader__menuButton span:first-child {
@@ -240,7 +303,7 @@ onBeforeUnmount(() => {
     z-index: 1;
     display: block;
     border: 0;
-    background: rgba(4, 6, 9, 0.16);
+    background: rgba(4, 7, 11, 0.28);
     cursor: pointer;
   }
 
@@ -251,16 +314,16 @@ onBeforeUnmount(() => {
     z-index: 6;
     display: grid;
     align-content: start;
-    width: min(22rem, calc(100vw - 1.6rem));
-    height: auto;
+    width: min(22rem, calc(100vw - 1.5rem));
     max-height: calc(100vh - var(--header-height) - 1.5rem);
     overflow-y: auto;
     border: 1px solid var(--color-line);
+    padding: 0.35rem;
     background:
-      linear-gradient(180deg, rgba(13, 17, 23, 0.98), rgba(7, 9, 13, 0.95)),
-      rgba(7, 9, 13, 0.96);
+      linear-gradient(180deg, rgba(15, 23, 32, 0.98), rgba(7, 11, 16, 0.96)),
+      rgba(7, 11, 16, 0.96);
     box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, 0.34);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(18px);
     opacity: 0;
     pointer-events: none;
     transform: translate3d(0, -0.4rem, 0) scale(0.985);
@@ -283,12 +346,10 @@ onBeforeUnmount(() => {
   .siteHeader__link {
     justify-content: space-between;
     width: 100%;
-    min-height: 58px;
+    min-height: 54px;
     min-width: 0;
-    border-left: 0;
-    border-top: 1px solid rgba(243, 245, 248, 0.12);
-    padding-inline: 1rem;
-    font-size: 0.72rem;
+    padding-inline: 0.85rem;
+    font-size: 0.7rem;
   }
 
   .siteHeader__link::after {
@@ -296,11 +357,6 @@ onBeforeUnmount(() => {
     color: var(--color-ink-muted);
     font-size: 0.72rem;
     line-height: 1;
-    transform: translateY(-1px);
-  }
-
-  .siteHeader__link:first-child {
-    border-top: 0;
   }
 }
 
@@ -311,16 +367,16 @@ onBeforeUnmount(() => {
   }
 
   .siteHeader__logo {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
   }
 
   .siteHeader__wordmark {
-    font-size: 0.94rem;
+    font-size: 0.9rem;
   }
 
   .siteHeader__meta {
-    max-width: 22ch;
+    max-width: 21ch;
   }
 
   .siteHeader__menuButton {
