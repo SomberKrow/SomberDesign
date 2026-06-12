@@ -1,21 +1,27 @@
-# GrayKrow Monolith
+# Somber.Design
 
-A Vue 3 + Vite + SCSS single-page site for **GrayKrow**.
+A Vue 3 + Vite + SCSS single-page portfolio and identity site for **Somber.Design**.
 
-This starter is built as a monolithic page with four core sections:
+Version `v0.2` leans into a winter-gray visual system: somber skies, quiet panels, restrained motion, and a light flurry of snow.
 
-- Hero
-- About
-- Projects
-- Contact
+## Direction
 
-It is intentionally structured to be easy to reshape as the identity sharpens.
+Somber.Design is Jacob’s personal web identity for focused websites, practical frontend work, creator pages, and small utility builds.
+
+The site should feel:
+
+- Minimal
+- Cold but readable
+- Quiet and structured
+- Personal without being casual
+- Polished without feeling corporate
 
 ## Stack
 
 - Vue 3
 - Vite
 - SCSS via `sass-embedded`
+- Composition API / `<script setup>`
 
 ## Run locally
 
@@ -33,26 +39,25 @@ npm run build
 ## Main places to edit
 
 ### Content
+
 - `src/data/inProfileData.js`
 - `src/data/inProjectsData.js`
 
 ### Layout + section logic
+
 - `src/App.vue`
 - `src/components/`
 
 ### Theme styling
+
 - `src/assets/styles/_tokens.scss`
 - `src/assets/styles/_base.scss`
 - component-level scoped SCSS
 
-## Background image
+## Design notes
 
-The site background lives here:
-
-- `public/assets/images/graykrowForest.png`
-
-## Notes
-
-- No `package-lock.json` included
-- No `dist` folder included
-- Links and contact handles are left intentionally easy to swap
+- The main winter sky background is CSS-driven in `src/App.vue`.
+- The snow layer is handled by `src/components/inSnowLayer.vue`.
+- The header tracks active sections with `IntersectionObserver`.
+- Contact stays simple: email and GitHub only.
+- Motion respects `prefers-reduced-motion` in the global base styles and snow layer.
