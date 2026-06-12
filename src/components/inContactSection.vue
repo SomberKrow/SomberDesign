@@ -7,7 +7,10 @@ import { profileData } from '../data/inProfileData'
     <div class="shell-grid contactSection__inner">
       <header class="contactSection__intro">
         <p class="kicker">Contact</p>
-        <h2 class="section-title">For focused work, small builds, or useful cleanup, email is the cleanest path.</h2>
+        <h2 class="section-title">A simple path in. No forms. No noise.</h2>
+        <p class="section-body">
+          For focused websites, creator pages, redesign cleanup, or practical frontend builds, email is the cleanest place to start.
+        </p>
       </header>
 
       <div class="contactSection__panel line-frame">
@@ -29,6 +32,10 @@ import { profileData } from '../data/inProfileData'
   padding: var(--section-pad-y) 0;
 }
 
+.contactSection__inner {
+  align-items: start;
+}
+
 .contactSection__intro {
   grid-column: 1 / span 7;
   display: grid;
@@ -36,14 +43,29 @@ import { profileData } from '../data/inProfileData'
 }
 
 .contactSection__panel {
+  position: relative;
   grid-column: 8 / -1;
   padding: 1rem;
+  overflow: hidden;
+}
+
+.contactSection__panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(200, 213, 223, 0.13), transparent 36%);
+  pointer-events: none;
+}
+
+.contactSection__panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .contactSection__availability {
   color: var(--color-ink-dim);
-  font-size: 0.94rem;
-  line-height: 1.6;
+  font-size: 0.92rem;
+  line-height: 1.64;
 }
 
 .contactSection__panel ul {
@@ -55,13 +77,13 @@ import { profileData } from '../data/inProfileData'
   justify-content: space-between;
   gap: 1rem;
   padding: 0.72rem 0;
-  border-top: 1px solid rgba(243, 245, 248, 0.12);
+  border-top: 1px solid rgba(223, 232, 241, 0.12);
 }
 
 .contactSection__panel li span:first-child {
   color: var(--color-ink-muted);
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -69,7 +91,16 @@ import { profileData } from '../data/inProfileData'
 .contactSection__panel a,
 .contactSection__panel li span:last-child {
   color: var(--color-ink);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+}
+
+.contactSection__panel a {
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.contactSection__panel a:hover,
+.contactSection__panel a:focus-visible {
+  color: var(--color-accent);
 }
 
 @media (max-width: 900px) {
