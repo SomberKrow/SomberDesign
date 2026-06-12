@@ -1,32 +1,32 @@
 export const profileData = {
   alias: 'Somber.Design',
-  label: 'Frontend design / identity systems / quiet utility',
-  headline: 'Focused digital work, built with restraint.',
+  label: 'Winter gray websites / quiet frontend systems',
+  headline: 'Quiet design for cold skies and clear structure.',
   intro:
-    'Somber.Design is a personal archive for finished sites, active tools, and experiments shaped around clarity, atmosphere, and useful structure.',
+    'Somber.Design is Jacob’s personal web identity: focused websites, practical frontend work, and polished digital spaces shaped with restraint.',
   summary:
-    'I build simple, deliberate interfaces: clean typography, practical systems, and enough mood to feel personal without becoming noise.',
+    'I build compact interfaces with clean hierarchy, calm motion, readable structure, and enough atmosphere to feel finished without getting loud.',
   location: 'United States · remote-first',
-  availability: 'Open to focused frontend work, identity pages, and small utility builds.',
+  availability: 'Open to focused frontend work, creator pages, practical redesigns, and small utility builds.',
   currentSignal: {
-    title: 'Current signal',
+    title: 'Current atmosphere',
     text:
-      'Refining this space into a cleaner index for websites, tools, identity systems, and experiments that are still becoming something.',
+      'A colder, quieter version of the site: winter-gray panels, somber sky, light flurries, and a cleaner archive for the work that matters.',
   },
   ctas: {
     primary: {
-      label: 'View selected work',
+      label: 'View the work',
       href: '#projects',
     },
     secondary: {
-      label: 'Start a conversation',
+      label: 'Start quiet',
       href: '#contact',
     },
   },
   principles: [
-    'Small finished systems beat oversized ideas.',
-    'Visual atmosphere should support the work, not bury it.',
-    'Process, experiments, and unfinished pieces can still be worth showing.',
+    'Structure first. Atmosphere second. Polish always.',
+    'Motion should feel calm, not hungry for attention.',
+    'A small finished thing is stronger than a bloated unfinished idea.',
   ],
   contactLinks: [
     {
@@ -36,8 +36,8 @@ export const profileData = {
     },
     {
       label: 'GitHub',
-      value: 'github.com/GreyKrow',
-      href: 'https://github.com/GreyKrow',
+      value: 'github.com/SomberKrow',
+      href: 'https://github.com/SomberKrow',
     },
   ],
 }
