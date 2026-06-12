@@ -9,6 +9,8 @@ const props = defineProps({
 
 <template>
   <article class="projectCard line-frame">
+    <div class="projectCard__marker" aria-hidden="true"></div>
+
     <div class="projectCard__meta">
       <p class="projectCard__status">{{ props.project.status }}</p>
       <p class="projectCard__category">{{ props.project.category }}</p>
@@ -19,11 +21,11 @@ const props = defineProps({
       <p class="projectCard__summary">{{ props.project.summary }}</p>
     </div>
 
-    <ul class="projectCard__highlights">
+    <ul class="projectCard__highlights" aria-label="Project highlights">
       <li v-for="highlight in props.project.highlights" :key="highlight">{{ highlight }}</li>
     </ul>
 
-    <div class="projectCard__stack">
+    <div class="projectCard__stack" aria-label="Project stack">
       <span v-for="item in props.project.stack" :key="item">{{ item }}</span>
     </div>
 
@@ -40,18 +42,57 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .projectCard {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(140px, 210px) minmax(0, 1.4fr) minmax(0, 1fr) minmax(150px, 220px);
-  gap: 0.75rem 1rem;
+  grid-template-columns: minmax(120px, 170px) minmax(0, 1.35fr) minmax(180px, 0.8fr);
+  gap: 0.85rem 1rem;
   align-items: start;
   padding: 1rem;
-  transition: border-color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  overflow: hidden;
+  box-shadow: none;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.projectCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(223, 232, 241, 0.055), transparent 24%),
+    radial-gradient(circle at 100% 0%, rgba(143, 164, 183, 0.12), transparent 30%);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  pointer-events: none;
 }
 
 .projectCard:hover,
 .projectCard:focus-within {
   transform: translate3d(0, -2px, 0);
   border-color: var(--color-line-strong);
+  background: rgba(18, 27, 38, 0.82);
+}
+
+.projectCard:hover::before,
+.projectCard:focus-within::before {
+  opacity: 1;
+}
+
+.projectCard > *:not(.projectCard__marker) {
+  position: relative;
+  z-index: 1;
+}
+
+.projectCard__marker {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  width: 2px;
+  height: 2.4rem;
+  background: linear-gradient(180deg, var(--color-accent), transparent);
+  opacity: 0.62;
 }
 
 .projectCard__meta {
@@ -62,7 +103,7 @@ const props = defineProps({
 .projectCard__status,
 .projectCard__category {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -73,32 +114,34 @@ const props = defineProps({
 
 .projectCard__category {
   color: var(--color-ink-muted);
+  line-height: 1.45;
 }
 
 .projectCard__title {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.8vw, 2rem);
-  line-height: 0.94;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.15rem, 1.55vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
 
 .projectCard__summary {
   margin-top: 0.5rem;
   color: var(--color-ink-dim);
-  font-size: 0.91rem;
-  line-height: 1.62;
+  font-size: 0.9rem;
+  line-height: 1.64;
 }
 
 .projectCard__highlights {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.42rem;
 }
 
 .projectCard__highlights li {
   position: relative;
   padding-left: 0.75rem;
   color: var(--color-ink-dim);
-  font-size: 0.83rem;
+  font-size: 0.81rem;
   line-height: 1.52;
 }
 
@@ -106,27 +149,31 @@ const props = defineProps({
   content: '';
   position: absolute;
   left: 0;
-  top: 0.5rem;
+  top: 0.52rem;
   width: 0.33rem;
   height: 1px;
   background: var(--color-line-strong);
 }
 
 .projectCard__stack {
+  grid-column: 2 / span 2;
   display: flex;
   flex-wrap: wrap;
   gap: 0.36rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(223, 232, 241, 0.1);
 }
 
 .projectCard__stack span {
   display: inline-flex;
   align-items: center;
-  min-height: 1.7rem;
-  padding: 0.28rem 0.5rem;
-  border: 1px solid rgba(243, 245, 248, 0.15);
+  min-height: 1.65rem;
+  padding: 0.24rem 0.48rem;
+  border: 1px solid rgba(223, 232, 241, 0.14);
+  background: rgba(223, 232, 241, 0.025);
   color: var(--color-ink-dim);
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -136,14 +183,14 @@ const props = defineProps({
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid rgba(243, 245, 248, 0.12);
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(223, 232, 241, 0.1);
 }
 
 .projectCard__link {
   color: var(--color-ink);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -152,19 +199,25 @@ const props = defineProps({
   color: var(--color-ink-muted);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
   .projectCard {
-    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+    grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
   }
 
+  .projectCard__highlights,
   .projectCard__stack {
-    grid-column: 1 / -1;
+    grid-column: 2 / -1;
   }
 }
 
 @media (max-width: 780px) {
   .projectCard {
     grid-template-columns: 1fr;
+  }
+
+  .projectCard__highlights,
+  .projectCard__stack {
+    grid-column: 1 / -1;
   }
 }
 </style>
