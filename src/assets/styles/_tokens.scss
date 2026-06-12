@@ -1,24 +1,29 @@
 :root {
-  --color-bg: #07090d;
-  --color-bg-elevated: #0d1117;
-  --color-panel: #111722;
-  --color-panel-strong: #151d29;
-  --color-ink: #f3f5f8;
-  --color-ink-dim: #a8b1be;
-  --color-ink-muted: #798393;
-  --color-line: rgba(243, 245, 248, 0.16);
-  --color-line-strong: rgba(243, 245, 248, 0.28);
-  --color-accent: #d3dde8;
+  --color-bg: #070b10;
+  --color-bg-deep: #04070b;
+  --color-bg-elevated: #0b1118;
+  --color-panel: rgba(15, 23, 32, 0.74);
+  --color-panel-strong: rgba(20, 30, 42, 0.9);
+  --color-panel-soft: rgba(216, 226, 236, 0.045);
+  --color-ink: #edf2f6;
+  --color-ink-dim: #b8c2cc;
+  --color-ink-muted: #7f8c98;
+  --color-line: rgba(223, 232, 241, 0.13);
+  --color-line-strong: rgba(223, 232, 241, 0.26);
+  --color-accent: #c8d5df;
+  --color-accent-cold: #8fa4b7;
+  --color-frost: rgba(213, 226, 238, 0.08);
+  --color-shadow: rgba(0, 0, 0, 0.46);
 
   --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', 'SFMono-Regular', ui-monospace, monospace;
 
-  --max-width: min(1320px, calc(100vw - 2.5rem));
+  --max-width: min(1180px, calc(100vw - 2.5rem));
   --grid-columns: 12;
-  --header-height: 76px;
-  --section-pad-y: clamp(3.25rem, 7vw, 5rem);
-  --section-pad-y-tight: clamp(2.25rem, 5vw, 3.5rem);
+  --header-height: 66px;
+  --section-pad-y: clamp(3rem, 6vw, 4.75rem);
+  --section-pad-y-tight: clamp(2.15rem, 4.5vw, 3.25rem);
 
   --space-1: 0.375rem;
   --space-2: 0.625rem;
@@ -30,6 +35,8 @@
   --space-8: 5rem;
 
   --duration-fast: 160ms;
-  --duration-base: 240ms;
+  --duration-base: 260ms;
+  --duration-slow: 720ms;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
