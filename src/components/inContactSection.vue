@@ -7,9 +7,9 @@ import { profileData } from '../data/inProfileData'
     <div class="shell-grid contactSection__inner">
       <header class="contactSection__intro">
         <p class="kicker">Contact</p>
-        <h2 class="section-title">A simple path in. No forms. No noise.</h2>
+        <h2 class="section-title">Contact me.</h2>
         <p class="section-body">
-          For focused websites, creator pages, redesign cleanup, or practical frontend builds, email is the cleanest place to start.
+          Email is the best way to reach me about websites, redesigns, creator pages, or frontend work.
         </p>
       </header>
 
