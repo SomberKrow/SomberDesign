@@ -1,12 +1,12 @@
 export const projectsData = [
   {
     title: 'Somber.Design',
-    status: 'Active Identity',
+    status: 'Active Project',
     category: 'Personal site / portfolio',
     summary:
-      'The home base for Jacob’s design and frontend work: winter-gray atmosphere, practical structure, and a cleaner archive for finished and evolving projects.',
+      'My personal portfolio, contact page, and development playground for finished work, active projects, and frontend experiments.',
     stack: ['Vue 3', 'Vite', 'SCSS', 'Identity'],
-    highlights: ['CSS-built winter sky', 'Compact single-page structure', 'Quiet motion and responsive polish'],
+    highlights: ['Responsive single-page layout', 'Reusable project data', 'Custom winter-gray visual system'],
     links: [
       {
         label: 'Currently viewing',
@@ -19,9 +19,9 @@ export const projectsData = [
     status: 'Client Site',
     category: 'Pet sitting website',
     summary:
-      'A warm, accessible site for in-home pet sitting in Columbus, built around trust, clear information, and mobile-first contact paths.',
+      'A mobile-first website for an in-home pet sitter in Columbus, with clear service information, availability details, and direct contact options.',
     stack: ['Vue 3', 'SCSS', 'Content Design', 'Accessibility'],
-    highlights: ['Elder-friendly readability', 'Simple service structure', 'No unnecessary form friction'],
+    highlights: ['Accessible text and contrast', 'Simple service structure', 'Direct contact information'],
     links: [
       {
         label: 'Case study pending',
@@ -32,11 +32,11 @@ export const projectsData = [
   {
     title: 'Staria VT',
     status: 'Creator Site',
-    category: 'VTuber social galaxy',
+    category: 'VTuber link website',
     summary:
-      'A space-themed creator page using orbiting social links, soft purple atmosphere, and a focused link experience built for personality without clutter.',
+      'A creator link site built around an orbiting social layout, with a desktop galaxy view and a simpler mobile link list.',
     stack: ['Vue 3', 'SCSS', 'Motion', 'Creator Identity'],
-    highlights: ['Orbiting social system', 'Mobile link fallback', 'Soft space atmosphere'],
+    highlights: ['Orbiting social links', 'Mobile link fallback', 'Creator-specific visual design'],
     links: [
       {
         label: 'Case study pending',
@@ -47,11 +47,11 @@ export const projectsData = [
   {
     title: 'Alco Live',
     status: 'Creator Site',
-    category: 'Bartender VTuber landing page',
+    category: 'Bartender VTuber website',
     summary:
-      'A classic bar-inspired link site shaped around neon warmth, bottle-based social links, and a welcoming one-page creator experience.',
+      'A one-page creator site using bottle graphics as social links, a bar shelf layout, and a separate mobile navigation system.',
     stack: ['Vue 3', 'SCSS', 'Visual Direction', 'Responsive Layout'],
-    highlights: ['Bottle-link interaction', 'Bar shelf composition', 'Mobile-first menu fallback'],
+    highlights: ['Bottle-based social links', 'Custom bar shelf layout', 'Mobile menu fallback'],
     links: [
       {
         label: 'Case study pending',
@@ -61,12 +61,12 @@ export const projectsData = [
   },
   {
     title: 'NorWinter',
-    status: 'In Formation',
-    category: 'Creator-facing hub',
+    status: 'In Development',
+    category: 'Creator website hub',
     summary:
-      'A minimal winter-gray client-facing home for creator websites, hosted sub-sites, and practical support without fake agency language.',
+      'A client-facing home for creator websites, hosted sub-sites, project information, and the services included with the platform.',
     stack: ['Brand Direction', 'Frontend', 'Creator Infrastructure'],
-    highlights: ['Creator site hub', 'Minimal studio language', 'Winter-gray visual system'],
+    highlights: ['Creator website directory', 'Hosted sub-site structure', 'Service and project information'],
     links: [
       {
         label: 'Project notes pending',
@@ -77,11 +77,11 @@ export const projectsData = [
   {
     title: 'GrayVault',
     status: 'Active Prototype',
-    category: 'Local-first utility',
+    category: 'Local-first desktop utility',
     summary:
-      'Password manager concept focused on private workflows, low-noise interaction, and desktop utility without cloud dependency.',
+      'A private desktop utility prototype focused on local files, straightforward daily use, and no required cloud account.',
     stack: ['Vue 3', 'Vite', 'Electron', 'SCSS'],
-    highlights: ['Quiet task-first interface', 'Offline-first vault direction', 'Built around practical daily use'],
+    highlights: ['Local file storage', 'Desktop-focused interface', 'Offline workflow'],
     links: [
       {
         label: 'Case study in progress',
