@@ -7,15 +7,14 @@ import inProjectCard from './inProjectCard.vue'
   <section class="projectsSection">
     <div class="shell-grid projectsSection__inner">
       <header class="projectsSection__intro">
-        <p class="kicker">Selected Work</p>
-        <h2 class="section-title">A quiet archive of sites, tools, and creator-facing systems.</h2>
+        <p class="kicker">Portfolio</p>
+        <h2 class="section-title">Websites, tools, and projects I’ve worked on.</h2>
         <p class="section-body">
-          The work stays focused: small websites, practical builds, identity pages, and experiments that show structure,
-          restraint, and enough polish to feel finished.
+          Some are finished client or creator sites. Others are active personal projects, prototypes, or experiments.
         </p>
       </header>
 
-      <p class="projectsSection__count" aria-label="Number of listed projects">{{ projectsData.length }} entries</p>
+      <p class="projectsSection__count" aria-label="Number of listed projects">{{ projectsData.length }} projects</p>
 
       <div class="projectsSection__rail">
         <inProjectCard v-for="project in projectsData" :key="project.title" :project="project" />
