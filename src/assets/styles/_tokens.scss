@@ -1,19 +1,22 @@
 :root {
-  --color-bg: #070b10;
-  --color-bg-deep: #04070b;
-  --color-bg-elevated: #0b1118;
-  --color-panel: rgba(15, 23, 32, 0.74);
-  --color-panel-strong: rgba(20, 30, 42, 0.9);
-  --color-panel-soft: rgba(216, 226, 236, 0.045);
-  --color-ink: #edf2f6;
-  --color-ink-dim: #b8c2cc;
-  --color-ink-muted: #7f8c98;
-  --color-line: rgba(223, 232, 241, 0.13);
-  --color-line-strong: rgba(223, 232, 241, 0.26);
-  --color-accent: #c8d5df;
-  --color-accent-cold: #8fa4b7;
-  --color-frost: rgba(213, 226, 238, 0.08);
-  --color-shadow: rgba(0, 0, 0, 0.46);
+  --color-bg: #0a0d10;
+  --color-bg-deep: #050709;
+  --color-bg-elevated: #14191e;
+  --color-panel: rgba(24, 29, 34, 0.68);
+  --color-panel-strong: rgba(29, 36, 42, 0.88);
+  --color-panel-soft: rgba(183, 197, 207, 0.055);
+  --color-panel-hover: rgba(31, 39, 46, 0.82);
+  --color-ink: #e8ebeb;
+  --color-ink-dim: #bcc3c5;
+  --color-ink-muted: #879198;
+  --color-line: rgba(196, 207, 214, 0.16);
+  --color-line-strong: rgba(196, 207, 214, 0.3);
+  --color-accent: #b8c6cf;
+  --color-accent-soft: #9aabb6;
+  --color-accent-cold: #768d9e;
+  --color-frost: rgba(174, 191, 202, 0.1);
+  --color-frost-strong: rgba(174, 191, 202, 0.16);
+  --color-shadow: rgba(0, 0, 0, 0.38);
 
   --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
