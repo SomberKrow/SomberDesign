@@ -53,7 +53,8 @@ const props = defineProps({
   transition:
     border-color var(--duration-fast) var(--ease-out),
     transform var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out);
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 }
 
 .projectCard::before {
@@ -61,9 +62,9 @@ const props = defineProps({
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(223, 232, 241, 0.055), transparent 24%),
-    radial-gradient(circle at 100% 0%, rgba(143, 164, 183, 0.12), transparent 30%);
-  opacity: 0;
+    linear-gradient(100deg, rgba(194, 205, 212, 0.075), transparent 28%),
+    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.13), transparent 32%);
+  opacity: 0.38;
   transition: opacity var(--duration-fast) var(--ease-out);
   pointer-events: none;
 }
@@ -72,7 +73,12 @@ const props = defineProps({
 .projectCard:focus-within {
   transform: translate3d(0, -2px, 0);
   border-color: var(--color-line-strong);
-  background: rgba(18, 27, 38, 0.82);
+  background:
+    linear-gradient(145deg, rgba(194, 205, 212, 0.09), rgba(118, 141, 158, 0.035) 46%, rgba(11, 14, 17, 0.06)),
+    var(--color-panel-hover);
+  box-shadow:
+    0 1rem 2.75rem rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(232, 236, 238, 0.04);
 }
 
 .projectCard:hover::before,
@@ -91,8 +97,8 @@ const props = defineProps({
   left: 0;
   width: 2px;
   height: 2.4rem;
-  background: linear-gradient(180deg, var(--color-accent), transparent);
-  opacity: 0.62;
+  background: linear-gradient(180deg, var(--color-accent-cold), transparent);
+  opacity: 0.82;
 }
 
 .projectCard__meta {
@@ -109,7 +115,7 @@ const props = defineProps({
 }
 
 .projectCard__status {
-  color: var(--color-ink);
+  color: var(--color-accent);
 }
 
 .projectCard__category {
@@ -118,6 +124,7 @@ const props = defineProps({
 }
 
 .projectCard__title {
+  color: var(--color-ink);
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 1.55vw, 1.65rem);
   font-weight: 600;
@@ -152,7 +159,7 @@ const props = defineProps({
   top: 0.52rem;
   width: 0.33rem;
   height: 1px;
-  background: var(--color-line-strong);
+  background: var(--color-accent-cold);
 }
 
 .projectCard__stack {
@@ -161,7 +168,7 @@ const props = defineProps({
   flex-wrap: wrap;
   gap: 0.36rem;
   padding-top: 0.6rem;
-  border-top: 1px solid rgba(223, 232, 241, 0.1);
+  border-top: 1px solid var(--color-line);
 }
 
 .projectCard__stack span {
@@ -169,8 +176,8 @@ const props = defineProps({
   align-items: center;
   min-height: 1.65rem;
   padding: 0.24rem 0.48rem;
-  border: 1px solid rgba(223, 232, 241, 0.14);
-  background: rgba(223, 232, 241, 0.025);
+  border: 1px solid var(--color-line);
+  background: linear-gradient(180deg, rgba(184, 198, 207, 0.055), rgba(118, 141, 158, 0.025));
   color: var(--color-ink-dim);
   font-family: var(--font-mono);
   font-size: 0.58rem;
@@ -184,11 +191,11 @@ const props = defineProps({
   flex-wrap: wrap;
   gap: 0.8rem;
   padding-top: 0.55rem;
-  border-top: 1px solid rgba(223, 232, 241, 0.1);
+  border-top: 1px solid var(--color-line);
 }
 
 .projectCard__link {
-  color: var(--color-ink);
+  color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.12em;
