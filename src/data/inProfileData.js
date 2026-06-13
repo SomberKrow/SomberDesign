@@ -1,32 +1,32 @@
 export const profileData = {
   alias: 'Somber.Design',
-  label: 'Winter gray websites / quiet frontend systems',
-  headline: 'Quiet design for cold skies and clear structure.',
+  label: 'Portfolio / frontend work / personal projects',
+  headline: 'Websites, frontend projects, and whatever I build next.',
   intro:
-    'Somber.Design is Jacob’s personal web identity: focused websites, practical frontend work, and polished digital spaces shaped with restraint.',
+    'Somber.Design is my personal portfolio, contact point, and general playground for websites, small tools, experiments, and ongoing projects.',
   summary:
-    'I build compact interfaces with clean hierarchy, calm motion, readable structure, and enough atmosphere to feel finished without getting loud.',
+    'I’m Jacob. I design and build websites, creator pages, and small frontend tools. This site is where I collect finished work, document active projects, and test new ideas.',
   location: 'United States · remote-first',
-  availability: 'Open to focused frontend work, creator pages, practical redesigns, and small utility builds.',
+  availability: 'Available for focused website builds, redesigns, creator pages, and frontend cleanup.',
   currentSignal: {
-    title: 'Current atmosphere',
+    title: 'About this site',
     text:
-      'A colder, quieter version of the site: winter-gray panels, somber sky, light flurries, and a cleaner archive for the work that matters.',
+      'This is a portfolio of completed work, a way to contact me, and a working space for projects and experiments that are still in development.',
   },
   ctas: {
     primary: {
-      label: 'View the work',
+      label: 'View projects',
       href: '#projects',
     },
     secondary: {
-      label: 'Start quiet',
+      label: 'Contact me',
       href: '#contact',
     },
   },
   principles: [
-    'Structure first. Atmosphere second. Polish always.',
-    'Motion should feel calm, not hungry for attention.',
-    'A small finished thing is stronger than a bloated unfinished idea.',
+    'Clear layouts and readable content.',
+    'Responsive design that works from small phones through desktop.',
+    'Lightweight frontend code without unnecessary dependencies.',
   ],
   contactLinks: [
     {
