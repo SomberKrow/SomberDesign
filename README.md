@@ -1,20 +1,20 @@
 # Somber.Design
 
-A Vue 3 + Vite + SCSS single-page portfolio and identity site for **Somber.Design**.
+A Vue 3 + Vite + SCSS single-page portfolio for **Somber.Design**.
 
-Version `v0.2` leans into a winter-gray visual system: somber skies, quiet panels, restrained motion, and a light flurry of snow.
+Somber.Design is Jacob’s personal portfolio, contact page, and development playground. It collects completed websites, active projects, small tools, and frontend experiments in one place.
 
-## Direction
+## Site purpose
 
-Somber.Design is Jacob’s personal web identity for focused websites, practical frontend work, creator pages, and small utility builds.
+The website should clearly show:
 
-The site should feel:
+- Who Jacob is
+- Which projects he has worked on
+- What kind of frontend work he builds
+- How to contact him
+- Which experiments and personal projects are still in development
 
-- Minimal
-- Cold but readable
-- Quiet and structured
-- Personal without being casual
-- Polished without feeling corporate
+The winter-gray background and snow are part of the visual design. The written content should stay direct and explain the site without describing its mood.
 
 ## Stack
 
@@ -43,7 +43,7 @@ npm run build
 - `src/data/inProfileData.js`
 - `src/data/inProjectsData.js`
 
-### Layout + section logic
+### Layout and section logic
 
 - `src/App.vue`
 - `src/components/`
@@ -52,12 +52,12 @@ npm run build
 
 - `src/assets/styles/_tokens.scss`
 - `src/assets/styles/_base.scss`
-- component-level scoped SCSS
+- Component-level scoped SCSS
 
-## Design notes
+## Implementation notes
 
-- The main winter sky background is CSS-driven in `src/App.vue`.
+- The forest background and image grading are handled in `src/App.vue`.
 - The snow layer is handled by `src/components/inSnowLayer.vue`.
 - The header tracks active sections with `IntersectionObserver`.
-- Contact stays simple: email and GitHub only.
-- Motion respects `prefers-reduced-motion` in the global base styles and snow layer.
+- Contact uses email and GitHub only.
+- Motion respects `prefers-reduced-motion`.
