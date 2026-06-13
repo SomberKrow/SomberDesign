@@ -59,13 +59,30 @@ const aboutNotes = [
 }
 
 .aboutSection__principles {
+  position: relative;
   grid-column: 8 / -1;
   padding: 1rem;
+  overflow: hidden;
+}
+
+.aboutSection__principles::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(190, 201, 208, 0.07), transparent 42%),
+    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.12), transparent 38%);
+  pointer-events: none;
+}
+
+.aboutSection__principles > * {
+  position: relative;
+  z-index: 1;
 }
 
 .aboutSection__panelLabel {
   margin-bottom: 0.75rem;
-  color: var(--color-ink-muted);
+  color: var(--color-accent-soft);
   font-family: var(--font-mono);
   font-size: 0.63rem;
   letter-spacing: 0.16em;
@@ -80,7 +97,7 @@ const aboutNotes = [
 .aboutSection__principles li {
   position: relative;
   padding: 0.72rem 0 0 0.85rem;
-  border-top: 1px solid rgba(223, 232, 241, 0.1);
+  border-top: 1px solid var(--color-line);
   color: var(--color-ink-dim);
   font-size: 0.9rem;
   line-height: 1.66;
@@ -93,7 +110,7 @@ const aboutNotes = [
   top: 1.15rem;
   width: 0.35rem;
   height: 1px;
-  background: var(--color-line-strong);
+  background: var(--color-accent-cold);
 }
 
 .aboutSection__notes {
@@ -105,8 +122,10 @@ const aboutNotes = [
 }
 
 .aboutSection__note {
+  position: relative;
   min-height: 150px;
   padding: 1rem;
+  overflow: hidden;
   box-shadow: none;
   transition:
     transform var(--duration-fast) var(--ease-out),
@@ -114,17 +133,43 @@ const aboutNotes = [
     background var(--duration-fast) var(--ease-out);
 }
 
+.aboutSection__note::after {
+  content: '';
+  position: absolute;
+  right: -2.5rem;
+  bottom: -3.5rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: rgba(118, 141, 158, 0.08);
+  filter: blur(1.8rem);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  pointer-events: none;
+}
+
 .aboutSection__note:hover,
 .aboutSection__note:focus-within {
   transform: translate3d(0, -2px, 0);
   border-color: var(--color-line-strong);
   background:
-    linear-gradient(180deg, rgba(223, 232, 241, 0.07), rgba(223, 232, 241, 0.02)),
-    var(--color-panel);
+    linear-gradient(145deg, rgba(194, 205, 212, 0.09), rgba(118, 141, 158, 0.035) 46%, rgba(11, 14, 17, 0.06)),
+    var(--color-panel-hover);
+}
+
+.aboutSection__note:hover::after,
+.aboutSection__note:focus-within::after {
+  opacity: 1;
+}
+
+.aboutSection__noteTitle,
+.aboutSection__noteBody {
+  position: relative;
+  z-index: 1;
 }
 
 .aboutSection__noteTitle {
-  color: var(--color-ink);
+  color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.14em;
