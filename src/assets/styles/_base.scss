@@ -90,7 +90,7 @@ a {
 }
 
 :focus-visible {
-  outline: 1px solid rgba(200, 213, 223, 0.9);
+  outline: 1px solid var(--color-accent);
   outline-offset: 4px;
 }
 
@@ -110,7 +110,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
-  color: var(--color-ink-muted);
+  color: var(--color-accent-soft);
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.18em;
@@ -121,16 +121,18 @@ a {
   content: '';
   width: 1.35rem;
   height: 1px;
-  background: var(--color-line-strong);
+  background: linear-gradient(90deg, var(--color-accent-cold), var(--color-line));
 }
 
 .section-title {
+  color: var(--color-ink);
   font-family: var(--font-display);
   font-size: clamp(1.65rem, 2vw, 2.65rem);
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1.02;
   text-wrap: balance;
+  text-shadow: 0 1px 1.5rem rgba(0, 0, 0, 0.28);
 }
 
 .section-body {
@@ -143,16 +145,20 @@ a {
 .line-frame {
   border: 1px solid var(--color-line);
   background:
-    linear-gradient(180deg, rgba(223, 232, 241, 0.055), rgba(223, 232, 241, 0.015)),
+    linear-gradient(145deg, rgba(190, 202, 210, 0.075), rgba(118, 141, 158, 0.025) 42%, rgba(8, 11, 14, 0.08)),
     var(--color-panel);
-  box-shadow: 0 1rem 3.5rem var(--color-shadow);
+  box-shadow:
+    0 1rem 3.25rem var(--color-shadow),
+    inset 0 1px 0 rgba(232, 236, 238, 0.035);
+  backdrop-filter: blur(12px) saturate(86%);
 }
 
 .section-rule {
   width: var(--max-width);
   height: 1px;
   margin: 0 auto;
-  background: linear-gradient(90deg, transparent, var(--color-line-strong), transparent);
+  background: linear-gradient(90deg, transparent, rgba(154, 171, 182, 0.42), transparent);
+  opacity: 0.72;
 }
 
 @media (prefers-reduced-motion: reduce) {
