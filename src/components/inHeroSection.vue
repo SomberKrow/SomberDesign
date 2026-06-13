@@ -59,11 +59,13 @@ import { profileData } from '../data/inProfileData'
 .heroSection__title {
   margin-top: 0.9rem;
   max-width: 16ch;
+  color: var(--color-ink);
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 4.6vw, 4.25rem);
   font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 0.98;
+  text-shadow: 0 0.25rem 2.25rem rgba(0, 0, 0, 0.4);
   text-wrap: balance;
 }
 
@@ -73,6 +75,7 @@ import { profileData } from '../data/inProfileData'
   color: var(--color-ink-dim);
   font-size: clamp(0.97rem, 1.08vw, 1.08rem);
   line-height: 1.74;
+  text-shadow: 0 1px 1rem rgba(0, 0, 0, 0.32);
 }
 
 .heroSection__actions {
@@ -89,34 +92,45 @@ import { profileData } from '../data/inProfileData'
   min-height: 44px;
   padding: 0.45rem 1rem;
   border: 1px solid var(--color-line-strong);
-  background: rgba(223, 232, 241, 0.035);
+  background:
+    linear-gradient(180deg, rgba(184, 198, 207, 0.08), rgba(118, 141, 158, 0.035)),
+    rgba(20, 25, 30, 0.56);
   color: var(--color-ink);
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(230, 234, 236, 0.035);
+  backdrop-filter: blur(8px) saturate(84%);
   transition:
     transform var(--duration-fast) var(--ease-out),
     background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
 .heroSection__button:hover,
 .heroSection__button:focus-visible {
   transform: translate3d(0, -2px, 0);
-  border-color: rgba(223, 232, 241, 0.42);
-  background: rgba(223, 232, 241, 0.08);
+  border-color: var(--color-accent-cold);
+  background:
+    linear-gradient(180deg, rgba(184, 198, 207, 0.13), rgba(118, 141, 158, 0.065)),
+    rgba(24, 30, 35, 0.68);
 }
 
 .heroSection__button--primary {
-  background: var(--color-accent);
-  color: var(--color-bg);
-  border-color: var(--color-accent);
+  background: linear-gradient(180deg, #c2ced5, #aebdc7);
+  color: #171c20;
+  border-color: #c4d0d7;
+  box-shadow:
+    0 0.7rem 2rem rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
 .heroSection__button--primary:hover,
 .heroSection__button--primary:focus-visible {
-  background: #e0e8ef;
+  background: linear-gradient(180deg, #d0d9de, #bac7cf);
+  color: #11161a;
 }
 
 .heroSection__signal {
@@ -126,6 +140,7 @@ import { profileData } from '../data/inProfileData'
   gap: 1rem;
   padding: 1rem;
   overflow: hidden;
+  border-color: rgba(196, 207, 214, 0.2);
   animation: contentRise var(--duration-slow) var(--ease-soft) 110ms both;
 }
 
@@ -134,9 +149,9 @@ import { profileData } from '../data/inProfileData'
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(120deg, rgba(223, 232, 241, 0.09), transparent 38%),
-    radial-gradient(circle at 100% 0%, rgba(143, 164, 183, 0.16), transparent 36%);
-  opacity: 0.78;
+    linear-gradient(125deg, rgba(194, 206, 214, 0.1), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.17), transparent 38%);
+  opacity: 0.74;
   pointer-events: none;
 }
 
@@ -149,7 +164,7 @@ import { profileData } from '../data/inProfileData'
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  color: var(--color-ink-muted);
+  color: var(--color-accent-soft);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.16em;
@@ -159,9 +174,10 @@ import { profileData } from '../data/inProfileData'
 .heroSection__signalTop span {
   width: 0.45rem;
   height: 0.45rem;
+  border: 1px solid rgba(213, 222, 228, 0.58);
   border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 1rem rgba(200, 213, 223, 0.34);
+  background: var(--color-accent-cold);
+  box-shadow: 0 0 1rem rgba(118, 141, 158, 0.46);
 }
 
 .heroSection__signalText {
@@ -175,7 +191,7 @@ import { profileData } from '../data/inProfileData'
   gap: 0.75rem;
   margin-top: 0.2rem;
   padding-top: 0.85rem;
-  border-top: 1px solid rgba(223, 232, 241, 0.12);
+  border-top: 1px solid var(--color-line);
 }
 
 .heroSection__meta dt {
