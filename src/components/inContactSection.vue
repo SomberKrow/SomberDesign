@@ -53,7 +53,9 @@ import { profileData } from '../data/inProfileData'
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 100% 0%, rgba(200, 213, 223, 0.13), transparent 36%);
+  background:
+    linear-gradient(135deg, rgba(194, 205, 212, 0.075), transparent 45%),
+    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.16), transparent 38%);
   pointer-events: none;
 }
 
@@ -77,11 +79,11 @@ import { profileData } from '../data/inProfileData'
   justify-content: space-between;
   gap: 1rem;
   padding: 0.72rem 0;
-  border-top: 1px solid rgba(223, 232, 241, 0.12);
+  border-top: 1px solid var(--color-line);
 }
 
 .contactSection__panel li span:first-child {
-  color: var(--color-ink-muted);
+  color: var(--color-accent-soft);
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.12em;
