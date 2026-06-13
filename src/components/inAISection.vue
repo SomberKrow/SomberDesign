@@ -1,12 +1,12 @@
 <script setup>
 const workflowAreas = [
   {
-    title: 'Development',
-    detail: 'Planning, debugging, code review, implementation support, documentation, and technical research.',
-  },
-  {
     title: 'Design',
     detail: 'Concept exploration, layout feedback, copy iteration, asset planning, and comparing different directions.',
+  },
+  {
+    title: 'Development',
+    detail: 'Planning, debugging, code review, implementation support, documentation, and technical research.',
   },
   {
     title: 'Production',
@@ -22,7 +22,7 @@ const workflowAreas = [
         <p class="kicker">AI Use</p>
         <h2 class="section-title">AI is part of my workflow.</h2>
         <p class="section-body">
-          I use AI openly across development, design, and production. It helps me explore more options, solve problems,
+          I use AI openly across design, development, and production. It helps me explore more options, solve problems,
           work through repetitive tasks, and move projects from an idea to a working result faster.
         </p>
       </header>
