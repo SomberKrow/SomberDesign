@@ -2,6 +2,7 @@
 import inSiteHeader from './components/inSiteHeader.vue'
 import inHeroSection from './components/inHeroSection.vue'
 import inAboutSection from './components/inAboutSection.vue'
+import inAISection from './components/inAISection.vue'
 import inProjectsSection from './components/inProjectsSection.vue'
 import inContactSection from './components/inContactSection.vue'
 import inSiteFooter from './components/inSiteFooter.vue'
@@ -28,6 +29,8 @@ import inSnowLayer from './components/inSnowLayer.vue'
       <inHeroSection id="hero" class="section-anchor" data-section />
       <div class="section-rule" aria-hidden="true"></div>
       <inAboutSection id="about" class="section-anchor" data-section />
+      <div class="section-rule" aria-hidden="true"></div>
+      <inAISection id="ai-use" class="section-anchor" />
       <div class="section-rule" aria-hidden="true"></div>
       <inProjectsSection id="projects" class="section-anchor" data-section />
       <div class="section-rule" aria-hidden="true"></div>
