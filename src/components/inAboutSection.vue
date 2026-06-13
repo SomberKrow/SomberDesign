@@ -3,16 +3,16 @@ import { profileData } from '../data/inProfileData'
 
 const aboutNotes = [
   {
-    title: 'Restraint',
-    detail: 'Keep the page calm. Let type, spacing, contrast, and rhythm do most of the work.',
+    title: 'Websites',
+    detail: 'Personal sites, creator pages, small business sites, and portfolio work.',
   },
   {
-    title: 'Structure',
-    detail: 'Build sections that are easy to scan, easy to maintain, and honest about what they are.',
+    title: 'Frontend',
+    detail: 'Vue 3, Vite, SCSS, responsive layouts, and component-based builds.',
   },
   {
-    title: 'Finish',
-    detail: 'Refine the edges: responsive behavior, motion timing, visual weight, copy, and handoff details.',
+    title: 'Playground',
+    detail: 'Small tools, experiments, redesigns, and ideas that may turn into full projects.',
   },
 ]
 </script>
@@ -21,13 +21,13 @@ const aboutNotes = [
   <section class="aboutSection">
     <div class="shell-grid aboutSection__inner">
       <header class="aboutSection__intro">
-        <p class="kicker">Approach</p>
-        <h2 class="section-title">Somber skies. Clean systems. Quiet work that feels done.</h2>
+        <p class="kicker">About</p>
+        <h2 class="section-title">I design and build websites, frontend projects, and small tools.</h2>
         <p class="section-body">{{ profileData.summary }}</p>
       </header>
 
-      <aside class="aboutSection__principles line-frame" aria-label="Core principles">
-        <p class="aboutSection__panelLabel">Rules of the build</p>
+      <aside class="aboutSection__principles line-frame" aria-label="What I focus on">
+        <p class="aboutSection__panelLabel">What I focus on</p>
         <ul>
           <li v-for="principle in profileData.principles" :key="principle">{{ principle }}</li>
         </ul>
@@ -59,39 +59,23 @@ const aboutNotes = [
 }
 
 .aboutSection__principles {
-  position: relative;
   grid-column: 8 / -1;
   padding: 1rem;
-  overflow: hidden;
 }
 
-.aboutSection__principles::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(135deg, rgba(190, 201, 208, 0.07), transparent 42%),
-    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.12), transparent 38%);
-  pointer-events: none;
-}
-
-.aboutSection__principles > * {
-  position: relative;
-  z-index: 1;
-}
-
-.aboutSection__panelLabel {
-  margin-bottom: 0.75rem;
+.aboutSection__panelLabel,
+.aboutSection__noteTitle {
   color: var(--color-accent-soft);
   font-family: var(--font-mono);
   font-size: 0.63rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .aboutSection__principles ul {
   display: grid;
   gap: 0.7rem;
+  margin-top: 0.75rem;
 }
 
 .aboutSection__principles li {
@@ -106,8 +90,8 @@ const aboutNotes = [
 .aboutSection__principles li::before {
   content: '';
   position: absolute;
-  left: 0;
   top: 1.15rem;
+  left: 0;
   width: 0.35rem;
   height: 1px;
   background: var(--color-accent-cold);
@@ -122,58 +106,18 @@ const aboutNotes = [
 }
 
 .aboutSection__note {
-  position: relative;
-  min-height: 150px;
+  min-height: 140px;
   padding: 1rem;
-  overflow: hidden;
   box-shadow: none;
   transition:
     transform var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out);
-}
-
-.aboutSection__note::after {
-  content: '';
-  position: absolute;
-  right: -2.5rem;
-  bottom: -3.5rem;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 50%;
-  background: rgba(118, 141, 158, 0.08);
-  filter: blur(1.8rem);
-  opacity: 0;
-  transition: opacity var(--duration-fast) var(--ease-out);
-  pointer-events: none;
+    border-color var(--duration-fast) var(--ease-out);
 }
 
 .aboutSection__note:hover,
 .aboutSection__note:focus-within {
   transform: translate3d(0, -2px, 0);
   border-color: var(--color-line-strong);
-  background:
-    linear-gradient(145deg, rgba(194, 205, 212, 0.09), rgba(118, 141, 158, 0.035) 46%, rgba(11, 14, 17, 0.06)),
-    var(--color-panel-hover);
-}
-
-.aboutSection__note:hover::after,
-.aboutSection__note:focus-within::after {
-  opacity: 1;
-}
-
-.aboutSection__noteTitle,
-.aboutSection__noteBody {
-  position: relative;
-  z-index: 1;
-}
-
-.aboutSection__noteTitle {
-  color: var(--color-accent);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .aboutSection__noteBody {
