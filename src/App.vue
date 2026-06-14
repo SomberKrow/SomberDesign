@@ -26,23 +26,60 @@ const navigation = [
 const pathBySection = Object.fromEntries(navigation.map(item => [item.id, item.path]))
 
 const services = [
-  { label: 'Design', copy: 'Structure, direction, and responsive systems.' },
-  { label: 'Frontend', copy: 'Vue, SCSS, components, and implementation.' },
-  { label: 'Creator Sites', copy: 'Focused homes for people and their work.' },
-  { label: 'Redesigns', copy: 'Cleaner systems for sites that already exist.' },
+  {
+    label: 'Design',
+    copy: 'Structure, visual direction, and responsive systems that hold together from phone to desktop.',
+  },
+  {
+    label: 'Frontend',
+    copy: 'Vue, SCSS, components, and the implementation work that turns a design into a finished site.',
+  },
+  {
+    label: 'Creator Sites',
+    copy: 'Focused homes for creators, their work, and the links people actually need.',
+  },
+  {
+    label: 'Redesigns',
+    copy: 'Older sites rebuilt with clearer hierarchy, cleaner behavior, and less friction.',
+  },
 ]
 
 const aiStages = [
-  { label: 'Design', copy: 'Explore, compare, refine.' },
-  { label: 'Development', copy: 'Plan, build, debug.' },
-  { label: 'Production', copy: 'Review, polish, release.' },
+  {
+    label: 'Design',
+    copy: 'Explore directions, compare layouts, and refine the idea.',
+  },
+  {
+    label: 'Development',
+    copy: 'Plan the build, solve problems, and review the code.',
+  },
+  {
+    label: 'Production',
+    copy: 'Tighten content, test the experience, and prepare the release.',
+  },
 ]
 
 const playgroundItems = [
-  { type: 'Study', label: 'Interfaces', copy: 'Navigation, layout, and motion.' },
-  { type: 'Utility', label: 'Tools', copy: 'Small software with a clear job.' },
-  { type: 'Rebuild', label: 'Revisions', copy: 'Older work, rebuilt properly.' },
-  { type: 'Prototype', label: 'Concepts', copy: 'Ideas tested before they grow.' },
+  {
+    type: 'Study',
+    label: 'Interfaces',
+    copy: 'Navigation, layout, typography, and motion studies.',
+  },
+  {
+    type: 'Utility',
+    label: 'Tools',
+    copy: 'Small software built around one useful job.',
+  },
+  {
+    type: 'Rebuild',
+    label: 'Revisions',
+    copy: 'Older work revisited with stronger structure and polish.',
+  },
+  {
+    type: 'Prototype',
+    label: 'Concepts',
+    copy: 'Ideas tested early before they become larger projects.',
+  },
 ]
 
 const featuredProject = computed(
@@ -273,7 +310,7 @@ onBeforeUnmount(() => {
 
             <aside class="hero__index" data-reveal>
               <p>Current focus</p>
-              <strong>Focused websites with a clear identity.</strong>
+              <strong>Focused websites with clear structure, quiet detail, and a distinct identity.</strong>
               <dl>
                 <div>
                   <dt>Stack</dt>
@@ -323,7 +360,7 @@ onBeforeUnmount(() => {
               <p class="sectionLabel">Featured Work</p>
               <h2>NorWinter.</h2>
             </header>
-            <p>A curated home for creator websites and services.</p>
+            <p>A curated home for creator websites and services, built as both a platform and a complete visual system.</p>
           </div>
 
           <article class="sectionFrame norwinterShowcase" data-reveal>
@@ -388,7 +425,7 @@ onBeforeUnmount(() => {
               <p class="sectionLabel">AI Use</p>
               <h2>Design. Development. Production.</h2>
             </header>
-            <p>Used openly. Directed, reviewed, and owned by me.</p>
+            <p>Used openly to explore faster, solve problems, and reduce repetitive work.</p>
           </div>
 
           <div class="sectionFrame process" data-reveal>
@@ -414,7 +451,7 @@ onBeforeUnmount(() => {
               <p class="sectionLabel">Playground</p>
               <h2>Ideas in progress.</h2>
             </header>
-            <p>Small tests, useful tools, and work worth revisiting.</p>
+            <p>Small tests, useful tools, and work worth revisiting. Some stay small. Others become the next full project.</p>
           </div>
 
           <div class="sectionFrame labIndex" data-reveal>
@@ -436,7 +473,7 @@ onBeforeUnmount(() => {
             <header data-reveal>
               <p class="sectionLabel">Contact</p>
               <h2>Let’s build something.</h2>
-              <p>Websites, redesigns, creator pages, and frontend work.</p>
+              <p>Websites, redesigns, creator pages, and frontend work. A short project outline is enough to start.</p>
             </header>
 
             <div class="contact__panel" data-reveal>
