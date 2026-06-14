@@ -1,83 +1,52 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { profileData } from './data/inProfileData'
 import { projectsData } from './data/inProjectsData'
 import inSnowLayer from './components/inSnowLayer.vue'
 
+const route = useRoute()
+const router = useRouter()
 const isMenuOpen = ref(false)
 const activeSection = ref('home')
 const isReady = ref(false)
 let revealObserver
 let scrollFrame
+let syncingRouteFromScroll = false
 
 const navigation = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'work', label: 'Work' },
-  { id: 'ai', label: 'AI Use' },
-  { id: 'playground', label: 'Playground' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'home', label: 'Home', path: '/' },
+  { id: 'about', label: 'About', path: '/about' },
+  { id: 'work', label: 'Work', path: '/work' },
+  { id: 'ai', label: 'AI Use', path: '/ai' },
+  { id: 'playground', label: 'Playground', path: '/playground' },
+  { id: 'contact', label: 'Contact', path: '/contact' },
 ]
 
+const pathBySection = Object.fromEntries(navigation.map(item => [item.id, item.path]))
+
 const services = [
-  {
-    label: 'Web Design',
-    copy: 'Structure, layout, visual direction, responsive systems, and practical interface decisions.',
-  },
-  {
-    label: 'Frontend',
-    copy: 'Vue 3, Vite, SCSS, component architecture, responsive behavior, and implementation.',
-  },
-  {
-    label: 'Creator Sites',
-    copy: 'Personal websites, link homes, portfolio pages, and project-specific identities.',
-  },
-  {
-    label: 'Redesigns',
-    copy: 'Reworking existing sites to improve clarity, consistency, performance, and mobile use.',
-  },
+  { label: 'Design', copy: 'Structure, direction, and responsive systems.' },
+  { label: 'Frontend', copy: 'Vue, SCSS, components, and implementation.' },
+  { label: 'Creator Sites', copy: 'Focused homes for people and their work.' },
+  { label: 'Redesigns', copy: 'Cleaner systems for sites that already exist.' },
 ]
 
 const aiStages = [
-  {
-    label: 'Design',
-    copy: 'Concept exploration, layout comparison, copy iteration, asset planning, and visual review.',
-  },
-  {
-    label: 'Development',
-    copy: 'Planning, implementation support, debugging, code review, documentation, and research.',
-  },
-  {
-    label: 'Production',
-    copy: 'Content passes, repetitive cleanup, QA checklists, iteration, and release preparation.',
-  },
+  { label: 'Design', copy: 'Explore, compare, refine.' },
+  { label: 'Development', copy: 'Plan, build, debug.' },
+  { label: 'Production', copy: 'Review, polish, release.' },
 ]
 
 const playgroundItems = [
-  {
-    type: 'Study',
-    label: 'Interface systems',
-    copy: 'Navigation patterns, layout structures, animation tests, and smaller visual experiments.',
-  },
-  {
-    type: 'Utility',
-    label: 'Focused tools',
-    copy: 'Local applications and small utilities built around a specific practical need.',
-  },
-  {
-    type: 'Rebuild',
-    label: 'Older projects',
-    copy: 'Existing work revisited with cleaner structure, stronger responsive behavior, and better polish.',
-  },
-  {
-    type: 'Prototype',
-    label: 'Early concepts',
-    copy: 'Ideas tested at a useful scale before they become complete products or public projects.',
-  },
+  { type: 'Study', label: 'Interfaces', copy: 'Navigation, layout, and motion.' },
+  { type: 'Utility', label: 'Tools', copy: 'Small software with a clear job.' },
+  { type: 'Rebuild', label: 'Revisions', copy: 'Older work, rebuilt properly.' },
+  { type: 'Prototype', label: 'Concepts', copy: 'Ideas tested before they grow.' },
 ]
 
 const featuredProject = computed(
-  () => projectsData.find(project => project.title === 'Sit With Emily') ?? projectsData[0],
+  () => projectsData.find(project => project.title === 'NorWinter') ?? projectsData[0],
 )
 
 const projectIndex = computed(() =>
@@ -92,6 +61,18 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
+const scrollToSection = (sectionId, behavior = 'smooth') => {
+  if (sectionId === 'home') {
+    window.scrollTo({ top: 0, behavior })
+    return
+  }
+
+  document.getElementById(sectionId)?.scrollIntoView({
+    behavior,
+    block: 'start',
+  })
+}
+
 const updateActiveSection = () => {
   const sections = navigation
     .map(item => document.getElementById(item.id))
@@ -99,21 +80,29 @@ const updateActiveSection = () => {
 
   if (!sections.length) return
 
-  const viewportMarker = Math.min(window.innerHeight * 0.38, 340)
+  const marker = Math.min(window.innerHeight * 0.38, 340)
   const atPageBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8
-  let nextActive = sections[0].id
+  let nextSection = sections[0].id
 
   if (atPageBottom) {
-    nextActive = 'contact'
+    nextSection = 'contact'
   } else {
     sections.forEach(section => {
-      if (section.getBoundingClientRect().top <= viewportMarker) {
-        nextActive = section.id
+      if (section.getBoundingClientRect().top <= marker) {
+        nextSection = section.id
       }
     })
   }
 
-  activeSection.value = nextActive
+  activeSection.value = nextSection
+
+  const nextPath = pathBySection[nextSection]
+  if (!nextPath || route.path === nextPath || syncingRouteFromScroll) return
+
+  syncingRouteFromScroll = true
+  router.replace(nextPath).finally(() => {
+    syncingRouteFromScroll = false
+  })
 }
 
 const requestSectionUpdate = () => {
@@ -135,7 +124,7 @@ const setupRevealObserver = () => {
       })
     },
     {
-      threshold: 0.12,
+      threshold: 0.1,
       rootMargin: '0px 0px -8% 0px',
     },
   )
@@ -156,9 +145,22 @@ watch(isMenuOpen, open => {
   document.body.classList.toggle('nav-open', open)
 })
 
+watch(
+  () => route.path,
+  () => {
+    if (syncingRouteFromScroll) return
+    const sectionId = route.meta?.sectionId ?? 'home'
+    activeSection.value = sectionId
+    window.requestAnimationFrame(() => scrollToSection(sectionId))
+  },
+)
+
 onMounted(async () => {
   await nextTick()
   setupRevealObserver()
+  const initialSection = route.meta?.sectionId ?? 'home'
+  activeSection.value = initialSection
+  scrollToSection(initialSection, 'auto')
   updateActiveSection()
   window.addEventListener('scroll', requestSectionUpdate, { passive: true })
   window.addEventListener('resize', handleResize)
@@ -184,10 +186,10 @@ onBeforeUnmount(() => {
     <inSnowLayer />
 
     <header class="mobileBar">
-      <a class="mobileBar__brand" href="#home" aria-label="Somber.Design home" @click="closeMenu">
+      <RouterLink class="mobileBar__brand" to="/" aria-label="Somber.Design home" @click="closeMenu">
         <img src="/assets/images/SomberDesignLogo.png" alt="" aria-hidden="true" />
         <span>Somber.Design</span>
-      </a>
+      </RouterLink>
 
       <button
         class="mobileBar__toggle"
@@ -203,30 +205,30 @@ onBeforeUnmount(() => {
     </header>
 
     <aside id="site-rail" class="sideRail" :class="{ 'is-open': isMenuOpen }">
-      <a class="sideRail__brand" href="#home" aria-label="Somber.Design home" @click="closeMenu">
+      <RouterLink class="sideRail__brand" to="/" aria-label="Somber.Design home" @click="closeMenu">
         <img src="/assets/images/SomberDesignLogo.png" alt="Somber.Design logo" />
         <div>
           <strong>Somber.Design</strong>
           <span>Portfolio by Jacob</span>
         </div>
-      </a>
+      </RouterLink>
 
       <nav class="sideRail__nav" aria-label="Primary navigation">
-        <a
+        <RouterLink
           v-for="(item, index) in navigation"
           :key="item.id"
-          :href="`#${item.id}`"
+          :to="item.path"
           :class="{ 'is-active': activeSection === item.id }"
           @click="closeMenu"
         >
           <span>{{ String(index + 1).padStart(2, '0') }}</span>
           <strong>{{ item.label }}</strong>
           <i aria-hidden="true"></i>
-        </a>
+        </RouterLink>
       </nav>
 
       <div class="sideRail__footer">
-        <p>Portfolio<br />Contact<br />Playground</p>
+        <p>Design<br />Development<br />Production</p>
         <span aria-hidden="true"></span>
         <a href="mailto:hello@somber.design">hello@somber.design</a>
       </div>
@@ -249,29 +251,33 @@ onBeforeUnmount(() => {
           <div class="hero__mist hero__mist--one" aria-hidden="true"></div>
           <div class="hero__mist hero__mist--two" aria-hidden="true"></div>
           <div class="hero__grain" aria-hidden="true"></div>
+          <div class="hero__frame" aria-hidden="true">
+            <span>Portfolio / 2026</span>
+            <span>Winter Gray System</span>
+            <span>Somber.Design</span>
+          </div>
+          <p class="hero__wordmark" aria-hidden="true">SOMBER</p>
 
           <div class="hero__layout">
             <div class="hero__panel" data-reveal>
               <p class="sectionLabel">Somber.Design / Jacob</p>
-              <h1>Websites, frontend projects, and whatever I build next.</h1>
+              <h1>{{ profileData.headline }}</h1>
               <span class="shortLine" aria-hidden="true"></span>
-              <p class="hero__intro">
-                My portfolio, contact point, and development playground for websites, tools, experiments, and ongoing work.
-              </p>
+              <p class="hero__intro">{{ profileData.intro }}</p>
 
               <div class="hero__actions">
-                <a class="action action--solid" href="#work">View the work <span>→</span></a>
-                <a class="action" href="#contact">Contact me</a>
+                <RouterLink class="action action--solid" to="/work">View work <span>→</span></RouterLink>
+                <RouterLink class="action" to="/contact">Contact</RouterLink>
               </div>
             </div>
 
             <aside class="hero__index" data-reveal>
               <p>Current focus</p>
-              <strong>Frontend design and practical web systems.</strong>
+              <strong>Focused websites with a clear identity.</strong>
               <dl>
                 <div>
                   <dt>Stack</dt>
-                  <dd>Vue 3 / Vite / SCSS</dd>
+                  <dd>Vue / Vite / SCSS</dd>
                 </div>
                 <div>
                   <dt>Based</dt>
@@ -282,18 +288,9 @@ onBeforeUnmount(() => {
           </div>
 
           <div class="hero__status">
-            <div>
-              <span>01</span>
-              <p>Portfolio</p>
-            </div>
-            <div>
-              <span>02</span>
-              <p>Contact</p>
-            </div>
-            <div>
-              <span>03</span>
-              <p>Playground</p>
-            </div>
+            <div><span>01</span><p>Portfolio</p></div>
+            <div><span>02</span><p>Contact</p></div>
+            <div><span>03</span><p>Playground</p></div>
             <p>{{ profileData.availability }}</p>
           </div>
         </section>
@@ -302,12 +299,12 @@ onBeforeUnmount(() => {
           <div class="sectionFrame about__intro" data-reveal>
             <header class="sectionHeading">
               <p class="sectionLabel">About</p>
-              <h2>Design and development with structure, restraint, and a finished result.</h2>
+              <h2>Clear structure. Strong identity. Finished work.</h2>
             </header>
 
             <div class="about__copy">
               <p>{{ profileData.summary }}</p>
-              <strong>Personal work, creator sites, client projects, and practical tools.</strong>
+              <strong>Personal sites, creator work, and practical tools.</strong>
             </div>
           </div>
 
@@ -323,35 +320,50 @@ onBeforeUnmount(() => {
         <section id="work" class="work section section--dark" data-section>
           <div class="sectionFrame sectionLead" data-reveal>
             <header class="sectionHeading">
-              <p class="sectionLabel">Selected Work</p>
-              <h2>Different projects. Different identities. The same attention to the frontend.</h2>
+              <p class="sectionLabel">Featured Work</p>
+              <h2>NorWinter.</h2>
             </header>
-
-            <p>
-              Client websites, creator pages, personal tools, and active prototypes built around the actual needs of each project.
-            </p>
+            <p>A curated home for creator websites and services.</p>
           </div>
 
-          <article class="sectionFrame featureProject" data-reveal>
-            <div class="featureProject__visual">
-              <div class="featureProject__forest" aria-hidden="true"></div>
-              <span>Featured project</span>
-              <strong>{{ featuredProject.title }}</strong>
+          <article class="sectionFrame norwinterShowcase" data-reveal>
+            <div class="norwinterShowcase__stage">
+              <div class="nwWindow">
+                <aside class="nwWindow__rail">
+                  <div class="nwWindow__mark">NW</div>
+                  <nav aria-label="NorWinter preview navigation">
+                    <span>01</span><strong>Home</strong>
+                    <span>02</span><strong>Projects</strong>
+                    <span>03</span><strong>Services</strong>
+                    <span>04</span><strong>Contact</strong>
+                  </nav>
+                  <small>Curated creator space</small>
+                </aside>
+
+                <div class="nwWindow__page">
+                  <div class="nwWindow__landscape" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                  </div>
+                  <p>NorWinter / Creator Platform</p>
+                  <h3>A home for creator websites.</h3>
+                  <span>Invite-only · Focused support · Built by Somber.Design</span>
+                  <div class="nwWindow__action">Explore the space <b>→</b></div>
+                </div>
+              </div>
             </div>
 
-            <div class="featureProject__content">
-              <div class="featureProject__meta">
+            <div class="norwinterShowcase__details">
+              <div class="featureMeta">
                 <span>{{ featuredProject.status }}</span>
                 <span>{{ featuredProject.category }}</span>
               </div>
+              <p class="sectionLabel">Case Study / 01</p>
               <h3>{{ featuredProject.title }}</h3>
               <p>{{ featuredProject.summary }}</p>
-
               <ul>
                 <li v-for="highlight in featuredProject.highlights" :key="highlight">{{ highlight }}</li>
               </ul>
-
-              <div class="featureProject__stack">
+              <div class="featureStack">
                 <span v-for="item in featuredProject.stack" :key="item">{{ item }}</span>
               </div>
             </div>
@@ -373,13 +385,10 @@ onBeforeUnmount(() => {
         <section id="ai" class="ai section section--light" data-section>
           <div class="sectionFrame sectionLead" data-reveal>
             <header class="sectionHeading">
-              <p class="sectionLabel">AI in My Workflow</p>
+              <p class="sectionLabel">AI Use</p>
               <h2>Design. Development. Production.</h2>
             </header>
-
-            <p>
-              I use AI openly throughout the same workflow I use to build projects. It helps me explore options, solve problems, reduce repetitive work, and reach a finished result faster.
-            </p>
+            <p>Used openly. Directed, reviewed, and owned by me.</p>
           </div>
 
           <div class="sectionFrame process" data-reveal>
@@ -395,9 +404,7 @@ onBeforeUnmount(() => {
 
           <div class="sectionFrame ownership" data-reveal>
             <span>Responsibility</span>
-            <p>
-              AI is a production tool, not something I hide. The direction, decisions, review, testing, and final responsibility remain mine.
-            </p>
+            <p>Direction, decisions, testing, and final responsibility remain mine.</p>
           </div>
         </section>
 
@@ -405,12 +412,9 @@ onBeforeUnmount(() => {
           <div class="sectionFrame sectionLead" data-reveal>
             <header class="sectionHeading">
               <p class="sectionLabel">Playground</p>
-              <h2>A working area for experiments, rebuilds, and ideas in progress.</h2>
+              <h2>Ideas in progress.</h2>
             </header>
-
-            <p>
-              Not every useful project needs to begin as a finished product. This is where smaller ideas are tested and documented.
-            </p>
+            <p>Small tests, useful tools, and work worth revisiting.</p>
           </div>
 
           <div class="sectionFrame labIndex" data-reveal>
@@ -426,16 +430,17 @@ onBeforeUnmount(() => {
         <section id="contact" class="contact" data-section>
           <div class="contact__forest" aria-hidden="true"></div>
           <div class="contact__shade" aria-hidden="true"></div>
+          <p class="contact__wordmark" aria-hidden="true">CONTACT</p>
 
           <div class="contact__layout">
             <header data-reveal>
               <p class="sectionLabel">Contact</p>
-              <h2>Have a project in mind?</h2>
-              <p>Email is the best way to reach me about websites, redesigns, creator pages, or frontend work.</p>
+              <h2>Let’s build something.</h2>
+              <p>Websites, redesigns, creator pages, and frontend work.</p>
             </header>
 
             <div class="contact__panel" data-reveal>
-              <span>Available for focused work</span>
+              <span>Available</span>
               <strong>{{ profileData.availability }}</strong>
 
               <dl>
@@ -446,9 +451,7 @@ onBeforeUnmount(() => {
                       :href="link.href"
                       :target="link.href.startsWith('http') ? '_blank' : undefined"
                       :rel="link.href.startsWith('http') ? 'noreferrer' : undefined"
-                    >
-                      {{ link.value }}
-                    </a>
+                    >{{ link.value }}</a>
                   </dd>
                 </div>
               </dl>
@@ -462,7 +465,7 @@ onBeforeUnmount(() => {
       <footer class="footer">
         <p>somber.design</p>
         <span aria-hidden="true"></span>
-        <p>Portfolio / Contact / Playground</p>
+        <p>Design / Development / Production</p>
         <p>Built by Jacob</p>
       </footer>
     </div>
