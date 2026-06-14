@@ -23,6 +23,7 @@ The current build uses:
 - restrained snow, mist, grain, and motion
 - concise copy instead of long explanations
 - NorWinter as the intended featured project
+- clean section URLs through Vue Router
 
 The goal is a site that feels personal, cold, structured, and finished without reading like an agency template.
 
@@ -38,6 +39,19 @@ The current pass is focused on:
 - rebuilding the featured-work section around NorWinter
 - tightening section spacing and visual rhythm
 - checking mobile behavior after each larger design pass
+
+Routing is now in place. Each section has a clean path:
+
+```text
+/             Home
+/about        About
+/work         Work
+/ai           AI Use
+/playground   Playground
+/contact      Contact
+```
+
+Scrolling updates the current route without adding history entries. Clicking a navigation item uses Vue Router and scrolls to the matching section. Direct visits to a path such as `/work` or `/contact` are also supported.
 
 ## Running the project
 
@@ -63,7 +77,10 @@ npm run preview
 ```text
 src/
 ├── App.vue                       active site layout and section logic
-├── main.js                       app entry point
+├── main.js                       app entry point and router installation
+├── router/
+│   ├── index.js                  route definitions and page titles
+│   └── sectionNavigation.js      route, scroll, and section-link sync
 ├── components/
 │   └── inSnowLayer.vue           snow effect
 ├── data/
@@ -75,9 +92,11 @@ src/
     ├── main.scss                 style entry point
     └── site.scss                 active site design
 
-public/assets/images/
-├── graykrowForest.png            main forest artwork
-└── SomberDesignLogo.png          primary logo
+public/
+├── _redirects                    Netlify history fallback
+└── assets/images/
+    ├── graykrowForest.png        main forest artwork
+    └── SomberDesignLogo.png      primary logo
 ```
 
 ## Editing content
@@ -104,8 +123,11 @@ A few rules worth keeping as the project changes:
 
 ## Implementation notes
 
-- active navigation is handled in `App.vue`
+- visible section tracking remains in `App.vue`
+- route and scroll synchronization lives in `src/router/sectionNavigation.js`
 - Contact is forced active at the bottom of the page so Playground does not remain selected
+- route changes use `replace` while scrolling, keeping browser history useful
+- the Netlify fallback in `public/_redirects` prevents direct route visits from returning 404
 - reveal animations only run once
 - reduced-motion preferences are respected
 - snow is removed on smaller screens
@@ -126,6 +148,9 @@ Check:
 - no horizontal scrolling
 - the forest crop still works
 - the rail highlights the correct section
+- `/about`, `/work`, `/ai`, `/playground`, and `/contact` load directly
+- browser back and forward return to the expected section
+- no route contains a `#`
 - project text does not overflow
 - buttons remain easy to tap
 - the closing Contact section is reachable and readable
