@@ -4,63 +4,52 @@ const currentYear = new Date().getFullYear()
 
 <template>
   <footer class="siteFooter">
-    <div class="shell-grid siteFooter__inner">
-      <p class="siteFooter__brand">Somber.Design</p>
-      <p class="siteFooter__note">Portfolio, contact point, and playground for my web projects.</p>
-      <p class="siteFooter__copyright">© {{ currentYear }} · Built by Jacob</p>
+    <div class="siteFooter__inner">
+      <p>somber.design</p>
+      <span aria-hidden="true"></span>
+      <p>Portfolio / Projects / Playground</p>
+      <p>{{ currentYear }} / Built by Jacob</p>
     </div>
   </footer>
 </template>
 
 <style scoped lang="scss">
 .siteFooter {
-  position: relative;
-  z-index: 2;
-  padding: 0.5rem 0 2rem;
+  background: var(--color-bg-deep);
+  color: var(--color-ink-muted);
 }
 
 .siteFooter__inner {
+  display: grid;
+  grid-template-columns: auto minmax(3rem, 1fr) auto auto;
+  gap: 1.25rem;
   align-items: center;
-  padding-top: 0.85rem;
-  border-top: 1px solid rgba(223, 232, 241, 0.16);
-}
-
-.siteFooter__brand {
-  grid-column: 1 / span 3;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.siteFooter__note {
-  grid-column: 4 / span 6;
-  color: var(--color-ink-muted);
-  font-size: 0.78rem;
-  line-height: 1.55;
-}
-
-.siteFooter__copyright {
-  grid-column: 10 / -1;
-  justify-self: end;
-  color: var(--color-ink-muted);
+  width: var(--max-width);
+  min-height: 58px;
+  margin: 0 auto;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-@media (max-width: 900px) {
-  .siteFooter__brand,
-  .siteFooter__note,
-  .siteFooter__copyright {
-    grid-column: 1 / -1;
-    justify-self: start;
+.siteFooter__inner span {
+  height: 1px;
+  background: var(--color-line);
+}
+
+.siteFooter__inner p:last-child {
+  color: var(--color-ink-dim);
+}
+
+@media (max-width: 700px) {
+  .siteFooter__inner {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding-block: 1.1rem;
   }
 
-  .siteFooter__inner {
-    gap: 0.4rem;
+  .siteFooter__inner span {
+    display: none;
   }
 }
-</style>
