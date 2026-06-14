@@ -7,115 +7,184 @@ import { profileData } from '../data/inProfileData'
     <div class="shell-grid contactSection__inner">
       <header class="contactSection__intro">
         <p class="kicker">Contact</p>
-        <h2 class="section-title">Contact me.</h2>
-        <p class="section-body">
-          Email is the best way to reach me about websites, redesigns, creator pages, or frontend work.
-        </p>
+        <h2>Have a project in mind?</h2>
+        <p>Email is the best way to reach me about websites, redesigns, creator pages, or frontend work.</p>
       </header>
 
-      <div class="contactSection__panel line-frame">
-        <p class="contactSection__availability">{{ profileData.availability }}</p>
-        <ul>
-          <li v-for="link in profileData.contactLinks" :key="link.label">
-            <span>{{ link.label }}</span>
-            <a v-if="link.href" :href="link.href" target="_blank" rel="noreferrer">{{ link.value }}</a>
-            <span v-else>{{ link.value }}</span>
-          </li>
-        </ul>
+      <div class="contactSection__details">
+        <p>{{ profileData.availability }}</p>
+        <dl>
+          <div v-for="link in profileData.contactLinks" :key="link.label">
+            <dt>{{ link.label }}</dt>
+            <dd>
+              <a v-if="link.href" :href="link.href" target="_blank" rel="noreferrer">{{ link.value }}</a>
+              <span v-else>{{ link.value }}</span>
+            </dd>
+          </div>
+        </dl>
       </div>
+
+      <a class="contactSection__cta" href="mailto:hello@somber.design">
+        <span class="contactSection__icon" aria-hidden="true">◇</span>
+        <span class="contactSection__ctaLabel">Start a conversation</span>
+        <strong>Tell me what you’re building and where you need help.</strong>
+        <small>Send an email →</small>
+      </a>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
 .contactSection {
-  padding: var(--section-pad-y) 0;
+  border-bottom: 1px solid var(--color-line-dark);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 48%),
+    var(--color-paper);
+  color: var(--color-ink-dark);
 }
 
 .contactSection__inner {
-  align-items: start;
+  align-items: stretch;
+  padding-block: var(--section-pad-y);
 }
 
 .contactSection__intro {
-  grid-column: 1 / span 7;
-  display: grid;
-  gap: 1rem;
+  grid-column: 1 / span 4;
 }
 
-.contactSection__panel {
-  position: relative;
-  grid-column: 8 / -1;
-  padding: 1rem;
-  overflow: hidden;
+.contactSection__intro h2 {
+  max-width: 13ch;
+  margin-top: 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
 }
 
-.contactSection__panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(135deg, rgba(194, 205, 212, 0.075), transparent 45%),
-    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.16), transparent 38%);
-  pointer-events: none;
+.contactSection__intro > p:last-child {
+  max-width: 44ch;
+  margin-top: 1rem;
+  color: var(--color-ink-dark-dim);
+  font-size: 0.88rem;
+  line-height: 1.68;
 }
 
-.contactSection__panel > * {
-  position: relative;
-  z-index: 1;
+.contactSection__details {
+  grid-column: 5 / span 3;
+  padding-left: 1.35rem;
+  border-left: 1px solid var(--color-line-dark);
 }
 
-.contactSection__availability {
-  color: var(--color-ink-dim);
-  font-size: 0.92rem;
-  line-height: 1.64;
+.contactSection__details > p {
+  color: var(--color-ink-dark-dim);
+  font-size: 0.84rem;
+  line-height: 1.62;
 }
 
-.contactSection__panel ul {
-  margin-top: 0.9rem;
+.contactSection__details dl {
+  margin-top: 1.15rem;
 }
 
-.contactSection__panel li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+.contactSection__details dl > div {
   padding: 0.72rem 0;
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid var(--color-line-dark);
 }
 
-.contactSection__panel li span:first-child {
-  color: var(--color-accent-soft);
+.contactSection__details dt {
+  color: var(--color-accent-strong);
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
+  font-size: 0.56rem;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
-.contactSection__panel a,
-.contactSection__panel li span:last-child {
+.contactSection__details dd {
+  margin-top: 0.28rem;
+  color: var(--color-ink-dark);
+  font-size: 0.82rem;
+}
+
+.contactSection__cta {
+  grid-column: 8 / -1;
+  display: grid;
+  align-content: start;
+  min-height: 210px;
+  padding: 1.25rem;
+  border: 1px solid var(--color-bg-soft);
+  background: var(--color-bg-soft);
   color: var(--color-ink);
-  font-size: 0.88rem;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
-.contactSection__panel a {
-  transition: color var(--duration-fast) var(--ease-out);
+.contactSection__cta:hover,
+.contactSection__cta:focus-visible {
+  transform: translateY(-3px);
+  background: #1b2934;
 }
 
-.contactSection__panel a:hover,
-.contactSection__panel a:focus-visible {
+.contactSection__icon {
+  color: var(--color-accent);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.contactSection__ctaLabel,
+.contactSection__cta small {
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.contactSection__ctaLabel {
+  margin-top: 1rem;
   color: var(--color-accent);
 }
 
-@media (max-width: 900px) {
-  .contactSection__intro,
-  .contactSection__panel {
+.contactSection__cta strong {
+  max-width: 27ch;
+  margin-top: 0.65rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.contactSection__cta small {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--color-ink-dim);
+}
+
+@media (max-width: 1000px) {
+  .contactSection__intro {
+    grid-column: 1 / span 6;
+  }
+
+  .contactSection__details {
+    grid-column: 7 / -1;
+  }
+
+  .contactSection__cta {
     grid-column: 1 / -1;
+    min-height: 180px;
+    margin-top: 0.75rem;
   }
 }
 
-@media (max-width: 640px) {
-  .contactSection__panel li {
-    flex-direction: column;
-    gap: 0.35rem;
+@media (max-width: 700px) {
+  .contactSection__intro,
+  .contactSection__details,
+  .contactSection__cta {
+    grid-column: 1 / -1;
+  }
+
+  .contactSection__details {
+    margin-top: 0.75rem;
+    padding: 1.25rem 0 0;
+    border-top: 1px solid var(--color-line-dark);
+    border-left: 0;
   }
 }
-</style>
