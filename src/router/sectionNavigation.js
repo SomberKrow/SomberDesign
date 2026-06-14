@@ -26,13 +26,14 @@ const decorateSectionLinks = () => {
 
     if (!routePath) return
 
-    link.href = routePath
+    link.setAttribute('href', routePath)
     link.dataset.sectionTarget = sectionId
   })
 }
 
 export const installSectionNavigation = router => {
   let scrollFrame
+  let decorateFrame
   let programmaticScroll = false
   let programmaticTimer
   let syncingRouteFromScroll = false
@@ -43,6 +44,15 @@ export const installSectionNavigation = router => {
     programmaticTimer = window.setTimeout(() => {
       programmaticScroll = false
     }, 900)
+  }
+
+  const requestLinkDecoration = () => {
+    if (decorateFrame) return
+
+    decorateFrame = window.requestAnimationFrame(() => {
+      decorateFrame = undefined
+      decorateSectionLinks()
+    })
   }
 
   const navigateToSection = async sectionId => {
@@ -61,7 +71,8 @@ export const installSectionNavigation = router => {
   }
 
   const handleDocumentClick = event => {
-    const link = event.target.closest('a[data-section-target]')
+    const target = event.target instanceof Element ? event.target : null
+    const link = target?.closest('a[data-section-target]')
 
     if (!link) return
     if (event.defaultPrevented || event.button !== 0) return
@@ -112,6 +123,18 @@ export const installSectionNavigation = router => {
     scrollFrame = window.requestAnimationFrame(syncRouteToScrollPosition)
   }
 
+  const linkObserver = new MutationObserver(requestLinkDecoration)
+  const appRoot = document.getElementById('app')
+
+  if (appRoot) {
+    linkObserver.observe(appRoot, {
+      attributes: true,
+      attributeFilter: ['href'],
+      childList: true,
+      subtree: true,
+    })
+  }
+
   router.afterEach(to => {
     window.requestAnimationFrame(() => {
       decorateSectionLinks()
@@ -135,6 +158,7 @@ export const installSectionNavigation = router => {
   })
 
   return () => {
+    linkObserver.disconnect()
     document.removeEventListener('click', handleDocumentClick)
     window.removeEventListener('scroll', requestRouteSync)
     window.removeEventListener('resize', requestRouteSync)
@@ -142,6 +166,10 @@ export const installSectionNavigation = router => {
 
     if (scrollFrame) {
       window.cancelAnimationFrame(scrollFrame)
+    }
+
+    if (decorateFrame) {
+      window.cancelAnimationFrame(decorateFrame)
     }
   }
 }
