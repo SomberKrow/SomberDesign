@@ -4,7 +4,7 @@ export const projectsData = [
     status: 'Active Project',
     category: 'Personal site / portfolio',
     summary:
-      'My personal portfolio, contact page, and development playground for finished work, active projects, and frontend experiments.',
+      'My personal portfolio, contact point, and development playground for finished work, active projects, and frontend experiments.',
     stack: ['Vue 3', 'Vite', 'SCSS', 'Identity'],
     highlights: ['Responsive single-page layout', 'Reusable project data', 'Custom winter-gray visual system'],
     links: [
@@ -19,7 +19,7 @@ export const projectsData = [
     status: 'Client Site',
     category: 'Pet sitting website',
     summary:
-      'A mobile-first website for an in-home pet sitter in Columbus, with clear service information, availability details, and direct contact options.',
+      'A mobile-first website for an in-home pet sitter in Columbus. Services, availability, and contact details stay clear and easy to find.',
     stack: ['Vue 3', 'SCSS', 'Content Design', 'Accessibility'],
     highlights: ['Accessible text and contrast', 'Simple service structure', 'Direct contact information'],
     links: [
@@ -34,7 +34,7 @@ export const projectsData = [
     status: 'Creator Site',
     category: 'VTuber link website',
     summary:
-      'A creator link site built around an orbiting social layout, with a desktop galaxy view and a simpler mobile link list.',
+      'A creator link site built around an orbiting social layout, with a galaxy view on desktop and a direct mobile link list.',
     stack: ['Vue 3', 'SCSS', 'Motion', 'Creator Identity'],
     highlights: ['Orbiting social links', 'Mobile link fallback', 'Creator-specific visual design'],
     links: [
@@ -49,7 +49,7 @@ export const projectsData = [
     status: 'Creator Site',
     category: 'Bartender VTuber website',
     summary:
-      'A one-page creator site using bottle graphics as social links, a bar shelf layout, and a separate mobile navigation system.',
+      'A one-page creator site shaped around bottle graphics, a bar shelf layout, and direct social navigation.',
     stack: ['Vue 3', 'SCSS', 'Visual Direction', 'Responsive Layout'],
     highlights: ['Bottle-based social links', 'Custom bar shelf layout', 'Mobile menu fallback'],
     links: [
@@ -64,9 +64,9 @@ export const projectsData = [
     status: 'In Development',
     category: 'Creator website hub',
     summary:
-      'A client-facing home for creator websites, hosted sub-sites, project information, and the services included with the platform.',
+      'A curated home for creator websites, hosted projects, and practical support. It is designed to feel selective and personal rather than like a public agency directory.',
     stack: ['Brand Direction', 'Frontend', 'Creator Infrastructure'],
-    highlights: ['Creator website directory', 'Hosted sub-site structure', 'Service and project information'],
+    highlights: ['Creator website directory', 'Hosted sub-site structure', 'Clear free and premium services'],
     links: [
       {
         label: 'Project notes pending',
@@ -79,7 +79,7 @@ export const projectsData = [
     status: 'Active Prototype',
     category: 'Local-first desktop utility',
     summary:
-      'A private desktop utility prototype focused on local files, straightforward daily use, and no required cloud account.',
+      'A private desktop utility focused on local files, direct daily use, and an offline workflow without a required cloud account.',
     stack: ['Vue 3', 'Vite', 'Electron', 'SCSS'],
     highlights: ['Local file storage', 'Desktop-focused interface', 'Offline workflow'],
     links: [
