@@ -1,27 +1,30 @@
 # Somber.Design
 
-A Vue 3 + Vite + SCSS single-page portfolio for **Somber.Design**.
+A Vue 3 + Vite + SCSS single-page portfolio for Jacob.
 
-Somber.Design is Jacob’s personal portfolio, contact page, and development playground. It collects completed websites, active projects, small tools, and frontend experiments in one place.
+Somber.Design is a personal portfolio, contact point, and development playground for completed websites, active projects, practical tools, and frontend experiments.
 
-## Site purpose
+## v0.4 rebuild
 
-The website should clearly show:
+The active site combines the strongest parts of the original forest-based design with the newer editorial portfolio direction:
 
-- Who Jacob is
-- Which projects he has worked on
-- What kind of frontend work he builds
-- How to contact him
-- Which experiments and personal projects are still in development
-
-The winter-gray background and snow are part of the visual design. The written content should stay direct and explain the site without describing its mood.
+- Full-bleed winter-gray forest hero
+- Light snow, mist, grain, and restrained motion
+- Fixed numbered navigation rail on desktop
+- Compact mobile navigation
+- Alternating pale and dark brutalist sections
+- Featured project presentation plus a compact project index
+- Direct AI workflow disclosure: Design, Development, Production
+- Dedicated playground section for experiments and prototypes
+- Forest-based closing contact section
+- Active section tracking and reveal animation handled inside Vue
 
 ## Stack
 
 - Vue 3
 - Vite
 - SCSS via `sass-embedded`
-- Composition API / `<script setup>`
+- Composition API with `<script setup>`
 
 ## Run locally
 
@@ -36,28 +39,33 @@ npm run dev
 npm run build
 ```
 
-## Main places to edit
+## Main files
+
+### Application
+
+- `src/App.vue`
+- `src/main.js`
 
 ### Content
 
 - `src/data/inProfileData.js`
 - `src/data/inProjectsData.js`
 
-### Layout and section logic
-
-- `src/App.vue`
-- `src/components/`
-
-### Theme styling
+### Styling
 
 - `src/assets/styles/_tokens.scss`
 - `src/assets/styles/_base.scss`
-- Component-level scoped SCSS
+- `src/assets/styles/site.scss`
+
+### Atmosphere
+
+- `src/components/inSnowLayer.vue`
+- `public/assets/images/graykrowForest.png`
+- `public/assets/images/SomberDesignLogo.png`
 
 ## Implementation notes
 
-- The forest background and image grading are handled in `src/App.vue`.
-- The snow layer is handled by `src/components/inSnowLayer.vue`.
-- The header tracks active sections with `IntersectionObserver`.
-- Contact uses email and GitHub only.
-- Motion respects `prefers-reduced-motion`.
+- The active navigation switches to Contact when the bottom of the page is reached.
+- Reveal animations run once as sections enter the viewport.
+- Snow and motion respect reduced-motion preferences.
+- Contact uses direct email and GitHub links without a form.
