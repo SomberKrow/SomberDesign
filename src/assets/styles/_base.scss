@@ -80,7 +80,7 @@ a {
   background: var(--color-paper-strong);
   color: var(--color-ink-dark);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transform: translateY(-150%);
@@ -96,76 +96,8 @@ a {
   outline-offset: 4px;
 }
 
-.section-anchor {
+section[id] {
   scroll-margin-top: 1rem;
-}
-
-.shell-grid {
-  display: grid;
-  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-  gap: clamp(0.8rem, 1.2vw, 1.25rem);
-  width: var(--max-width);
-  margin: 0 auto;
-}
-
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  width: fit-content;
-  font-family: var(--font-mono);
-  font-size: 0.67rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.kicker::after {
-  content: '';
-  width: 1.55rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.48;
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3vw, 3.4rem);
-  font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 1;
-  text-wrap: balance;
-}
-
-.section-body {
-  max-width: 62ch;
-  font-size: clamp(0.92rem, 1vw, 1.02rem);
-  line-height: 1.72;
-}
-
-.line-frame {
-  border: 1px solid var(--color-line);
-  background: rgba(16, 25, 33, 0.58);
-}
-
-.rail__navigation a.isScrollActive {
-  color: #eef2f4 !important;
-  background: rgba(166, 186, 199, 0.045) !important;
-}
-
-.rail__navigation a.isScrollActive::before {
-  opacity: 1 !important;
-  transform: scaleX(1) !important;
-}
-
-.rail__navigation:has(a.isScrollActive) a.isActive:not(.isScrollActive) {
-  color: #7f8d98 !important;
-  background: transparent !important;
-}
-
-.rail__navigation:has(a.isScrollActive) a.isActive:not(.isScrollActive)::before {
-  opacity: 0 !important;
-  transform: scaleX(0.3) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -179,16 +111,12 @@ a {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 920px) {
   .skipLink {
     left: 0.75rem;
   }
 
-  .section-anchor {
+  section[id] {
     scroll-margin-top: calc(var(--mobile-header-height) + 0.75rem);
-  }
-
-  .section-title {
-    font-size: clamp(1.75rem, 7vw, 2.7rem);
   }
 }
