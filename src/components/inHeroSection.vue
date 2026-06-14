@@ -4,15 +4,20 @@ import { profileData } from '../data/inProfileData'
 
 <template>
   <section class="heroSection">
+    <div class="heroSection__image" aria-hidden="true"></div>
+    <div class="heroSection__shape heroSection__shape--one" aria-hidden="true"></div>
+    <div class="heroSection__shape heroSection__shape--two" aria-hidden="true"></div>
+
     <div class="shell-grid heroSection__inner">
       <div class="heroSection__copy">
-        <p class="kicker">{{ profileData.label }}</p>
-        <h1 class="heroSection__title">{{ profileData.headline }}</h1>
+        <p class="kicker">Somber.Design / Jacob</p>
+        <h1>{{ profileData.headline }}</h1>
+        <span class="heroSection__rule" aria-hidden="true"></span>
         <p class="heroSection__intro">{{ profileData.intro }}</p>
 
         <div class="heroSection__actions">
           <a class="heroSection__button heroSection__button--primary" :href="profileData.ctas.primary.href">
-            {{ profileData.ctas.primary.label }}
+            {{ profileData.ctas.primary.label }} <span>→</span>
           </a>
           <a class="heroSection__button" :href="profileData.ctas.secondary.href">
             {{ profileData.ctas.secondary.label }}
@@ -20,256 +25,264 @@ import { profileData } from '../data/inProfileData'
         </div>
       </div>
 
-      <aside class="heroSection__signal line-frame" aria-label="Current atmosphere and availability">
-        <div class="heroSection__signalTop">
-          <span></span>
-          <p>{{ profileData.currentSignal.title }}</p>
+      <dl class="heroSection__facts">
+        <div>
+          <dt>Location</dt>
+          <dd>{{ profileData.location }}</dd>
         </div>
-        <p class="heroSection__signalText">{{ profileData.currentSignal.text }}</p>
-
-        <dl class="heroSection__meta">
-          <div>
-            <dt>Base</dt>
-            <dd>{{ profileData.location }}</dd>
-          </div>
-          <div>
-            <dt>Status</dt>
-            <dd>{{ profileData.availability }}</dd>
-          </div>
-        </dl>
-      </aside>
+        <div>
+          <dt>Availability</dt>
+          <dd>{{ profileData.availability }}</dd>
+        </div>
+      </dl>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
 .heroSection {
-  padding: clamp(2.4rem, 5.5vw, 4.25rem) 0 var(--section-pad-y-tight);
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-line-dark);
+  background:
+    linear-gradient(90deg, rgba(241, 244, 245, 0.99) 0%, rgba(241, 244, 245, 0.96) 45%, rgba(230, 235, 238, 0.7) 72%, rgba(230, 235, 238, 0.38) 100%),
+    var(--color-paper);
+  color: var(--color-ink-dark);
+}
+
+.heroSection::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(23, 33, 42, 0.08) 0 0.55px, transparent 0.65px),
+    radial-gradient(circle at 70% 65%, rgba(23, 33, 42, 0.05) 0 0.55px, transparent 0.65px);
+  background-size: 7px 7px, 11px 11px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.heroSection__image {
+  position: absolute;
+  inset: 0 0 0 37%;
+  background:
+    linear-gradient(90deg, var(--color-paper-strong) 0%, rgba(241, 244, 245, 0.75) 22%, rgba(241, 244, 245, 0.12) 68%),
+    linear-gradient(180deg, rgba(230, 235, 238, 0.18), rgba(13, 22, 30, 0.18)),
+    url('/assets/images/graykrowForest.png') center 70% / cover no-repeat;
+  filter: grayscale(0.72) saturate(0.42) brightness(1.22) contrast(0.78);
+  opacity: 0.72;
+}
+
+.heroSection__shape {
+  position: absolute;
+  right: -4vw;
+  z-index: 1;
+  width: min(30vw, 380px);
+  background: rgba(15, 26, 35, 0.75);
+  box-shadow: 0 1.5rem 3rem rgba(4, 10, 15, 0.18);
+  pointer-events: none;
+}
+
+.heroSection__shape--one {
+  top: 2.5rem;
+  height: 240px;
+  clip-path: polygon(55% 0, 100% 46%, 100% 100%, 28% 100%);
+}
+
+.heroSection__shape--two {
+  right: -1vw;
+  bottom: 0;
+  width: min(45vw, 620px);
+  height: 180px;
+  background: rgba(223, 229, 232, 0.78);
+  clip-path: polygon(34% 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .heroSection__inner {
-  align-items: end;
+  position: relative;
+  z-index: 3;
+  align-content: center;
+  min-height: 560px;
+  padding-block: 4.5rem 3rem;
 }
 
 .heroSection__copy {
-  grid-column: 1 / span 8;
-  animation: contentRise var(--duration-slow) var(--ease-soft) both;
+  grid-column: 1 / span 7;
+  max-width: 760px;
+  animation: heroEnter var(--duration-slow) var(--ease-soft) both;
 }
 
-.heroSection__title {
-  margin-top: 0.9rem;
-  max-width: 16ch;
-  color: var(--color-ink);
+.heroSection h1 {
+  max-width: 14ch;
+  margin-top: 1.15rem;
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.6vw, 4.25rem);
+  font-size: clamp(2.7rem, 5.6vw, 5.35rem);
   font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-  text-shadow: 0 0.25rem 2.25rem rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.058em;
+  line-height: 0.96;
   text-wrap: balance;
 }
 
+.heroSection__rule {
+  display: block;
+  width: 2.2rem;
+  height: 1px;
+  margin-top: 1.35rem;
+  background: var(--color-ink-dark);
+}
+
 .heroSection__intro {
-  margin-top: 1.1rem;
-  max-width: 58ch;
-  color: var(--color-ink-dim);
-  font-size: clamp(0.97rem, 1.08vw, 1.08rem);
-  line-height: 1.74;
-  text-shadow: 0 1px 1rem rgba(0, 0, 0, 0.32);
+  max-width: 55ch;
+  margin-top: 1.15rem;
+  color: var(--color-ink-dark-dim);
+  font-size: clamp(0.94rem, 1.1vw, 1.05rem);
+  line-height: 1.68;
 }
 
 .heroSection__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.65rem;
-  margin-top: 1.35rem;
+  gap: 0.75rem;
+  margin-top: 1.55rem;
 }
 
 .heroSection__button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0.45rem 1rem;
-  border: 1px solid var(--color-line-strong);
-  background:
-    linear-gradient(180deg, rgba(184, 198, 207, 0.08), rgba(118, 141, 158, 0.035)),
-    rgba(20, 25, 30, 0.56);
-  color: var(--color-ink);
+  gap: 1rem;
+  min-height: 46px;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid var(--color-line-dark-strong);
+  color: var(--color-ink-dark);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.13em;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  box-shadow: inset 0 1px 0 rgba(230, 234, 236, 0.035);
-  backdrop-filter: blur(8px) saturate(84%);
   transition:
     transform var(--duration-fast) var(--ease-out),
     background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out),
     color var(--duration-fast) var(--ease-out);
 }
 
 .heroSection__button:hover,
 .heroSection__button:focus-visible {
-  transform: translate3d(0, -2px, 0);
-  border-color: var(--color-accent-cold);
-  background:
-    linear-gradient(180deg, rgba(184, 198, 207, 0.13), rgba(118, 141, 158, 0.065)),
-    rgba(24, 30, 35, 0.68);
+  transform: translateY(-2px);
+  background: rgba(23, 33, 42, 0.07);
 }
 
 .heroSection__button--primary {
-  background: linear-gradient(180deg, #c2ced5, #aebdc7);
-  color: #171c20;
-  border-color: #c4d0d7;
-  box-shadow:
-    0 0.7rem 2rem rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  border-color: var(--color-bg-soft);
+  background: var(--color-bg-soft);
+  color: var(--color-paper-strong);
 }
 
 .heroSection__button--primary:hover,
 .heroSection__button--primary:focus-visible {
-  background: linear-gradient(180deg, #d0d9de, #bac7cf);
-  color: #11161a;
+  background: #1c2a35;
 }
 
-.heroSection__signal {
-  position: relative;
-  grid-column: 9 / -1;
+.heroSection__facts {
+  grid-column: 1 / span 7;
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  padding: 1rem;
-  overflow: hidden;
-  border-color: rgba(196, 207, 214, 0.2);
-  animation: contentRise var(--duration-slow) var(--ease-soft) 110ms both;
+  margin-top: 2.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line-dark);
 }
 
-.heroSection__signal::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(125deg, rgba(194, 206, 214, 0.1), transparent 40%),
-    radial-gradient(circle at 100% 0%, rgba(118, 141, 158, 0.17), transparent 38%);
-  opacity: 0.74;
-  pointer-events: none;
-}
-
-.heroSection__signal > * {
-  position: relative;
-  z-index: 1;
-}
-
-.heroSection__signalTop {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: var(--color-accent-soft);
+.heroSection__facts dt {
+  color: var(--color-accent-strong);
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.heroSection__signalTop span {
-  width: 0.45rem;
-  height: 0.45rem;
-  border: 1px solid rgba(213, 222, 228, 0.58);
-  border-radius: 50%;
-  background: var(--color-accent-cold);
-  box-shadow: 0 0 1rem rgba(118, 141, 158, 0.46);
-}
-
-.heroSection__signalText {
-  color: var(--color-ink-dim);
-  font-size: 0.9rem;
-  line-height: 1.75;
-}
-
-.heroSection__meta {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 0.2rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--color-line);
-}
-
-.heroSection__meta dt {
-  margin-bottom: 0.26rem;
-  color: var(--color-ink-muted);
-  font-family: var(--font-mono);
-  font-size: 0.61rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.heroSection__meta dd {
-  margin: 0;
-  color: var(--color-ink);
-  font-size: 0.84rem;
+.heroSection__facts dd {
+  margin-top: 0.4rem;
+  color: var(--color-ink-dark-dim);
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
-@keyframes contentRise {
+@keyframes heroEnter {
   from {
     opacity: 0;
-    transform: translate3d(0, 0.8rem, 0);
+    transform: translateY(1rem);
   }
 
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateY(0);
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .heroSection__copy,
-  .heroSection__signal {
-    grid-column: 1 / -1;
+  .heroSection__facts {
+    grid-column: 1 / span 8;
   }
 
-  .heroSection__signal {
-    max-width: 38rem;
+  .heroSection__image {
+    left: 48%;
+  }
+
+  .heroSection__shape {
+    opacity: 0.7;
   }
 }
 
 @media (max-width: 900px) {
   .heroSection {
-    padding-top: 2.1rem;
+    min-height: 0;
+    margin-top: var(--mobile-header-height);
   }
 
-  .heroSection__title {
-    max-width: 15ch;
-    font-size: clamp(2rem, 8vw, 3.25rem);
+  .heroSection__inner {
+    min-height: 520px;
+    padding-block: 4rem 2.5rem;
   }
 
-  .heroSection__intro {
-    max-width: 48ch;
+  .heroSection__copy,
+  .heroSection__facts {
+    grid-column: 1 / -1;
+  }
+
+  .heroSection__image {
+    inset: 0;
+    opacity: 0.32;
+  }
+
+  .heroSection__shape {
+    opacity: 0.28;
+  }
+
+  .heroSection h1 {
+    max-width: 13ch;
+    font-size: clamp(2.45rem, 10vw, 4.2rem);
   }
 }
 
-@media (max-width: 640px) {
-  .heroSection {
-    padding-top: 1.65rem;
+@media (max-width: 560px) {
+  .heroSection__inner {
+    min-height: 500px;
+    padding-block: 3.25rem 2rem;
   }
 
-  .heroSection__title {
-    max-width: 14ch;
-    font-size: clamp(1.75rem, 9vw, 2.55rem);
-    line-height: 1;
+  .heroSection h1 {
+    font-size: clamp(2.15rem, 11.5vw, 3.35rem);
   }
 
-  .heroSection__intro {
-    margin-top: 1rem;
-    line-height: 1.68;
-  }
-
-  .heroSection__actions {
-    gap: 0.5rem;
+  .heroSection__actions,
+  .heroSection__facts {
+    grid-template-columns: 1fr;
   }
 
   .heroSection__button {
     width: 100%;
   }
 }
-</style>
