@@ -6,9 +6,11 @@ const activeSection = ref('hero')
 let observer
 
 const navItems = [
-  { id: 'hero', label: 'Index' },
-  { id: 'about', label: 'Approach' },
-  { id: 'projects', label: 'Work' },
+  { id: 'hero', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'ai-use', label: 'AI Use' },
+  { id: 'playground', label: 'Playground' },
   { id: 'contact', label: 'Contact' },
 ]
 
@@ -21,33 +23,27 @@ const toggleMenu = () => {
 }
 
 const handleResize = () => {
-  if (window.innerWidth > 900) {
-    closeMenu()
-  }
+  if (window.innerWidth > 900) closeMenu()
 }
 
 const handleKeydown = event => {
-  if (event.key === 'Escape') {
-    closeMenu()
-  }
+  if (event.key === 'Escape') closeMenu()
 }
 
-const setupActiveSectionObserver = () => {
+const setupObserver = () => {
   const sections = document.querySelectorAll('[data-section]')
 
   observer = new IntersectionObserver(
     entries => {
-      const visibleEntries = entries
+      const visible = entries
         .filter(entry => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
 
-      if (visibleEntries[0]?.target?.id) {
-        activeSection.value = visibleEntries[0].target.id
-      }
+      if (visible[0]?.target?.id) activeSection.value = visible[0].target.id
     },
     {
-      rootMargin: '-28% 0px -52% 0px',
-      threshold: [0.1, 0.25, 0.5, 0.75],
+      rootMargin: '-24% 0px -58% 0px',
+      threshold: [0.08, 0.25, 0.5],
     },
   )
 
@@ -61,7 +57,7 @@ watch(isMenuOpen, isOpen => {
 onMounted(() => {
   window.addEventListener('resize', handleResize)
   window.addEventListener('keydown', handleKeydown)
-  setupActiveSectionObserver()
+  setupObserver()
 })
 
 onBeforeUnmount(() => {
@@ -73,342 +69,335 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="siteHeader">
-    <div class="shell-grid siteHeader__inner line-frame">
-      <a href="#hero" class="siteHeader__brand" aria-label="Somber.Design home" @click="closeMenu">
-        <img class="siteHeader__logo" src="/assets/images/SomberDesignLogo.png" alt="Somber.Design logo" />
-        <div class="siteHeader__identity">
-          <p class="siteHeader__wordmark">Somber.Design</p>
-          <p class="siteHeader__meta">Winter Gray Interface Work</p>
-        </div>
+  <header class="siteNav">
+    <div class="siteNav__mobileBar">
+      <a class="siteNav__mobileBrand" href="#hero" aria-label="Somber.Design home" @click="closeMenu">
+        <img src="/assets/images/SomberDesignLogo.png" alt="" aria-hidden="true" />
+        <span>Somber.Design</span>
       </a>
 
       <button
-        class="siteHeader__menuButton"
-        :class="{ isOpen: isMenuOpen }"
+        class="siteNav__menuButton"
         type="button"
         aria-label="Toggle navigation"
-        aria-controls="site-primary-nav"
         :aria-expanded="isMenuOpen"
+        aria-controls="site-navigation"
         @click="toggleMenu"
       >
         <span></span>
         <span></span>
       </button>
+    </div>
 
-      <nav id="site-primary-nav" class="siteHeader__nav" :class="{ isOpen: isMenuOpen }" aria-label="Primary navigation">
+    <div id="site-navigation" class="siteNav__panel" :class="{ isOpen: isMenuOpen }">
+      <a class="siteNav__brand" href="#hero" aria-label="Somber.Design home" @click="closeMenu">
+        <img class="siteNav__logo" src="/assets/images/SomberDesignLogo.png" alt="Somber.Design logo" />
+        <div>
+          <p class="siteNav__name">Somber.Design</p>
+          <p class="siteNav__byline">Portfolio by Jacob</p>
+        </div>
+      </a>
+
+      <nav class="siteNav__links" aria-label="Primary navigation">
         <a
-          v-for="item in navItems"
+          v-for="(item, index) in navItems"
           :key="item.id"
           :href="`#${item.id}`"
-          class="siteHeader__link"
+          class="siteNav__link"
           :class="{ isActive: activeSection === item.id }"
           @click="closeMenu"
         >
-          <span>{{ item.label }}</span>
+          <span class="siteNav__number">{{ String(index + 1).padStart(2, '0') }}</span>
+          <span class="siteNav__label">{{ item.label }}</span>
         </a>
       </nav>
+
+      <div class="siteNav__bottom">
+        <p>Portfolio.<br />Projects.<br />Experiments.</p>
+        <span></span>
+        <a href="#contact" @click="closeMenu">Contact me →</a>
+      </div>
+
+      <img class="siteNav__watermark" src="/assets/images/SomberDesignLogo.png" alt="" aria-hidden="true" />
     </div>
 
     <button
       v-if="isMenuOpen"
-      class="siteHeader__scrim"
+      class="siteNav__scrim"
       type="button"
-      aria-label="Close navigation menu"
+      aria-label="Close navigation"
       @click="closeMenu"
     ></button>
   </header>
 </template>
 
 <style scoped lang="scss">
-.siteHeader {
-  position: sticky;
-  top: 0;
-  z-index: 80;
-  padding-top: 0.65rem;
-}
-
-.siteHeader__inner {
+.siteNav {
   position: relative;
-  z-index: 2;
-  align-items: center;
-  min-height: var(--header-height);
-  overflow: visible;
-  background:
-    linear-gradient(180deg, rgba(38, 45, 51, 0.78), rgba(17, 21, 25, 0.72)),
-    rgba(19, 24, 28, 0.66);
-  border-color: rgba(196, 207, 214, 0.2);
-  box-shadow:
-    0 0.75rem 2.5rem rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(230, 234, 236, 0.045);
-  backdrop-filter: blur(16px) saturate(82%);
+  z-index: 100;
 }
 
-.siteHeader__brand {
-  grid-column: 1 / span 5;
-  display: inline-flex;
-  gap: 0.75rem;
-  align-items: center;
-  min-width: 0;
-  padding-left: 0.85rem;
-}
-
-.siteHeader__logo {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-  flex-shrink: 0;
-  opacity: 0.9;
-  filter: grayscale(0.12) saturate(0.72) drop-shadow(0 0 1.35rem rgba(118, 141, 158, 0.2));
-}
-
-.siteHeader__identity {
-  min-width: 0;
-}
-
-.siteHeader__wordmark {
-  color: var(--color-ink);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-
-.siteHeader__meta {
+.siteNav__panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 3;
+  display: flex;
+  width: var(--sidebar-width);
+  flex-direction: column;
   overflow: hidden;
-  color: var(--color-accent-soft);
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
+  border-right: 1px solid var(--color-line-strong);
+  background:
+    linear-gradient(180deg, rgba(11, 19, 27, 0.98), rgba(7, 14, 21, 0.99)),
+    var(--color-bg-deep);
+  box-shadow: 0.75rem 0 2.5rem rgba(0, 0, 0, 0.14);
+}
+
+.siteNav__brand {
+  display: grid;
+  justify-items: center;
+  gap: 0.8rem;
+  padding: 2.4rem 1.25rem 2rem;
+  text-align: center;
+}
+
+.siteNav__logo {
+  width: 66px;
+  height: 66px;
+  object-fit: contain;
+  filter: grayscale(0.18) saturate(0.78) drop-shadow(0 0 1.5rem rgba(143, 165, 179, 0.16));
+}
+
+.siteNav__name {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 600;
   letter-spacing: 0.13em;
-  text-overflow: ellipsis;
   text-transform: uppercase;
-  white-space: nowrap;
 }
 
-.siteHeader__nav {
-  grid-column: 7 / -1;
-  display: inline-flex;
-  justify-self: end;
-  align-self: stretch;
-  gap: 0.2rem;
-  padding: 0.35rem;
-}
-
-.siteHeader__link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 5.9rem;
-  padding: 0 0.85rem;
-  color: var(--color-ink-dim);
+.siteNav__byline {
+  margin-top: 0.35rem;
+  color: var(--color-ink-muted);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
+  font-size: 0.57rem;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
+}
+
+.siteNav__links {
+  display: grid;
+  gap: 0.18rem;
+  padding: 0.8rem 1.1rem;
+}
+
+.siteNav__link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.55rem;
+  align-items: center;
+  min-height: 54px;
+  padding: 0.55rem 0.65rem;
+  color: var(--color-ink-muted);
   transition:
     color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
-}
-
-.siteHeader__link::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  background: transparent;
-  transition:
-    border-color var(--duration-fast) var(--ease-out),
     background var(--duration-fast) var(--ease-out);
 }
 
-.siteHeader__link span {
-  position: relative;
-  z-index: 1;
+.siteNav__link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -1.1rem;
+  width: 1.15rem;
+  height: 1px;
+  background: var(--color-accent);
+  opacity: 0;
+  transform: translateY(-50%) scaleX(0.35);
+  transform-origin: left;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
-.siteHeader__link:hover,
-.siteHeader__link:focus-visible,
-.siteHeader__link.isActive {
+.siteNav__link:hover,
+.siteNav__link:focus-visible,
+.siteNav__link.isActive {
+  color: var(--color-ink);
+  background: rgba(166, 186, 199, 0.045);
+}
+
+.siteNav__link:hover::before,
+.siteNav__link:focus-visible::before,
+.siteNav__link.isActive::before {
+  opacity: 1;
+  transform: translateY(-50%) scaleX(1);
+}
+
+.siteNav__number,
+.siteNav__label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.siteNav__number {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+.siteNav__label {
+  font-size: 0.66rem;
+  letter-spacing: 0.15em;
+}
+
+.siteNav__bottom {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 1rem;
+  margin-top: auto;
+  padding: 1.5rem 1.6rem 2rem;
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  line-height: 1.65;
+  text-transform: uppercase;
+}
+
+.siteNav__bottom span {
+  width: 1.3rem;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+.siteNav__bottom a {
+  width: fit-content;
+  color: var(--color-ink-dim);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.siteNav__bottom a:hover,
+.siteNav__bottom a:focus-visible {
   color: var(--color-ink);
 }
 
-.siteHeader__link:hover::before,
-.siteHeader__link:focus-visible::before,
-.siteHeader__link.isActive::before {
-  border-color: var(--color-line);
-  background: linear-gradient(180deg, rgba(184, 198, 207, 0.09), rgba(118, 141, 158, 0.045));
-}
-
-.siteHeader__link.isActive::after {
-  content: '';
+.siteNav__watermark {
   position: absolute;
-  right: 0.75rem;
-  bottom: 0.5rem;
-  left: 0.75rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent-cold), transparent);
-  opacity: 0.8;
+  left: -3.5rem;
+  bottom: 4.2rem;
+  width: 15rem;
+  opacity: 0.055;
+  filter: grayscale(1);
+  pointer-events: none;
 }
 
-.siteHeader__menuButton,
-.siteHeader__scrim {
+.siteNav__mobileBar,
+.siteNav__scrim {
   display: none;
 }
 
 @media (max-width: 900px) {
-  .siteHeader {
-    padding-top: 0.45rem;
+  .siteNav__mobileBar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--mobile-header-height);
+    padding: 0 0.75rem 0 1rem;
+    border-bottom: 1px solid var(--color-line);
+    background: rgba(7, 14, 21, 0.94);
+    backdrop-filter: blur(16px);
   }
 
-  .siteHeader__brand {
-    grid-column: 1 / span 9;
-    padding-left: 0.75rem;
-  }
-
-  .siteHeader__meta {
-    font-size: 0.58rem;
-  }
-
-  .siteHeader__menuButton {
-    position: relative;
-    z-index: 7;
-    grid-column: 10 / -1;
-    justify-self: end;
+  .siteNav__mobileBrand {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.65rem;
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .siteNav__mobileBrand img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  .siteNav__menuButton {
+    position: relative;
     width: 48px;
     height: 48px;
     border: 0;
-    border-left: 1px solid var(--color-line);
     background: transparent;
     color: var(--color-ink);
     cursor: pointer;
   }
 
-  .siteHeader__menuButton span {
+  .siteNav__menuButton span {
     position: absolute;
-    width: 18px;
+    left: 14px;
+    width: 20px;
     height: 1px;
     background: currentColor;
-    transform-origin: center;
-    transition: transform var(--duration-fast) var(--ease-out);
   }
 
-  .siteHeader__menuButton span:first-child {
-    transform: translateY(-4px);
+  .siteNav__menuButton span:first-child {
+    top: 20px;
   }
 
-  .siteHeader__menuButton span:last-child {
-    transform: translateY(4px);
+  .siteNav__menuButton span:last-child {
+    top: 27px;
   }
 
-  .siteHeader__menuButton.isOpen span:first-child {
-    transform: rotate(35deg);
-  }
-
-  .siteHeader__menuButton.isOpen span:last-child {
-    transform: rotate(-35deg);
-  }
-
-  .siteHeader__scrim {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    display: block;
-    border: 0;
-    background: rgba(5, 7, 9, 0.34);
-    cursor: pointer;
-  }
-
-  .siteHeader__nav {
-    position: absolute;
-    top: calc(100% + 0.45rem);
-    right: 0;
-    z-index: 6;
-    display: grid;
-    align-content: start;
-    width: min(22rem, calc(100vw - 1.5rem));
-    max-height: calc(100vh - var(--header-height) - 1.5rem);
-    overflow-y: auto;
-    border: 1px solid var(--color-line);
-    padding: 0.35rem;
-    background:
-      linear-gradient(180deg, rgba(36, 43, 49, 0.97), rgba(14, 18, 22, 0.96)),
-      var(--color-panel-strong);
-    box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, 0.36);
-    backdrop-filter: blur(18px) saturate(84%);
+  .siteNav__panel {
+    top: var(--mobile-header-height);
+    width: min(22rem, 88vw);
+    border-top: 1px solid var(--color-line);
     opacity: 0;
     pointer-events: none;
-    transform: translate3d(0, -0.4rem, 0) scale(0.985);
-    transform-origin: top right;
-    visibility: hidden;
+    transform: translateX(-102%);
     transition:
       opacity var(--duration-base) var(--ease-out),
-      transform var(--duration-base) var(--ease-out),
-      visibility 0s linear var(--duration-base);
+      transform var(--duration-base) var(--ease-out);
   }
 
-  .siteHeader__nav.isOpen {
+  .siteNav__panel.isOpen {
     opacity: 1;
     pointer-events: auto;
-    transform: translate3d(0, 0, 0) scale(1);
-    visibility: visible;
-    transition-delay: 0s;
+    transform: translateX(0);
   }
 
-  .siteHeader__link {
-    justify-content: space-between;
-    width: 100%;
-    min-height: 54px;
-    min-width: 0;
-    padding-inline: 0.85rem;
-    font-size: 0.7rem;
+  .siteNav__brand {
+    justify-items: start;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    padding: 1.3rem;
+    text-align: left;
   }
 
-  .siteHeader__link::after {
-    content: '↘';
-    position: static;
-    width: auto;
-    height: auto;
-    background: none;
-    color: var(--color-ink-muted);
-    font-size: 0.72rem;
-    line-height: 1;
-    opacity: 1;
+  .siteNav__logo {
+    width: 46px;
+    height: 46px;
+  }
+
+  .siteNav__links {
+    padding-inline: 1.25rem;
+  }
+
+  .siteNav__watermark {
+    opacity: 0.04;
+  }
+
+  .siteNav__scrim {
+    position: fixed;
+    inset: var(--mobile-header-height) 0 0;
+    z-index: 2;
+    display: block;
+    border: 0;
+    background: rgba(3, 7, 10, 0.48);
   }
 }
-
-@media (max-width: 560px) {
-  .siteHeader__brand {
-    grid-column: 1 / span 8;
-    gap: 0.6rem;
-  }
-
-  .siteHeader__logo {
-    width: 34px;
-    height: 34px;
-  }
-
-  .siteHeader__wordmark {
-    font-size: 0.9rem;
-  }
-
-  .siteHeader__meta {
-    max-width: 21ch;
-  }
-
-  .siteHeader__menuButton {
-    grid-column: 9 / -1;
-  }
-
-  .siteHeader__nav {
-    left: 0;
-    right: 0;
-    width: auto;
-    transform-origin: top center;
-  }
-}
-</style>
