@@ -148,6 +148,26 @@ a {
   background: rgba(16, 25, 33, 0.58);
 }
 
+.rail__navigation a.isScrollActive {
+  color: #eef2f4 !important;
+  background: rgba(166, 186, 199, 0.045) !important;
+}
+
+.rail__navigation a.isScrollActive::before {
+  opacity: 1 !important;
+  transform: scaleX(1) !important;
+}
+
+.rail__navigation:has(a.isScrollActive) a.isActive:not(.isScrollActive) {
+  color: #7f8d98 !important;
+  background: transparent !important;
+}
+
+.rail__navigation:has(a.isScrollActive) a.isActive:not(.isScrollActive)::before {
+  opacity: 0 !important;
+  transform: scaleX(0.3) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
