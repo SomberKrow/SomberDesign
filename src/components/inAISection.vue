@@ -10,7 +10,7 @@ const workflowAreas = [
   },
   {
     title: 'Production',
-    detail: 'Repetitive cleanup, content passes, QA checklists, faster iteration, and moving projects toward release.',
+    detail: 'Content passes, repetitive cleanup, QA checklists, faster iteration, and moving projects toward release.',
   },
 ]
 </script>
@@ -18,28 +18,32 @@ const workflowAreas = [
 <template>
   <section class="aiSection">
     <div class="shell-grid aiSection__inner">
-      <header class="aiSection__intro">
-        <p class="kicker">AI Use</p>
-        <h2 class="section-title">AI is part of my workflow.</h2>
-        <p class="section-body">
-          I use AI openly across design, development, and production. It helps me explore more options, solve problems,
-          work through repetitive tasks, and move projects from an idea to a working result faster.
+      <header class="aiSection__header">
+        <p class="kicker">AI in My Workflow</p>
+        <h2>Design. Development. Production.</h2>
+        <p>
+          I use AI openly throughout the same workflow I use to build projects. It helps me explore options, solve problems,
+          reduce repetitive work, and move from an idea to a finished result faster.
         </p>
       </header>
 
-      <aside class="aiSection__statement line-frame">
-        <p class="aiSection__statementLabel">My position</p>
-        <p>
-          I see AI as a useful production tool, not something to hide. The direction, decisions, review, testing, and final
-          responsibility still belong to me.
-        </p>
-      </aside>
-
-      <div class="aiSection__areas">
-        <article v-for="area in workflowAreas" :key="area.title" class="aiSection__area line-frame">
+      <div class="aiSection__stages">
+        <article v-for="(area, index) in workflowAreas" :key="area.title">
+          <div class="aiSection__stageTop">
+            <span>{{ String(index + 1).padStart(2, '0') }}</span>
+            <i aria-hidden="true"></i>
+          </div>
           <h3>{{ area.title }}</h3>
           <p>{{ area.detail }}</p>
         </article>
+      </div>
+
+      <div class="aiSection__position">
+        <p class="aiSection__positionLabel">My position</p>
+        <p>
+          AI is a useful production tool, not something I hide. The direction, decisions, review, testing, and final
+          responsibility remain mine.
+        </p>
       </div>
     </div>
   </section>
@@ -47,82 +51,135 @@ const workflowAreas = [
 
 <style scoped lang="scss">
 .aiSection {
-  padding: var(--section-pad-y) 0;
+  border-bottom: 1px solid var(--color-line-dark);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent 45%),
+    var(--color-paper-strong);
+  color: var(--color-ink-dark);
 }
 
 .aiSection__inner {
-  align-items: start;
+  padding-block: var(--section-pad-y);
 }
 
-.aiSection__intro {
+.aiSection__header {
   grid-column: 1 / span 7;
-  display: grid;
-  gap: 1rem;
 }
 
-.aiSection__statement {
-  grid-column: 8 / -1;
-  padding: 1rem;
+.aiSection__header h2 {
+  max-width: 17ch;
+  margin-top: 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.7vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
 }
 
-.aiSection__statementLabel,
-.aiSection__area h3 {
-  color: var(--color-accent-soft);
-  font-family: var(--font-mono);
-  font-size: 0.63rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.aiSection__statement > p:last-child {
-  margin-top: 0.75rem;
-  color: var(--color-ink-dim);
+.aiSection__header > p:last-child {
+  max-width: 60ch;
+  margin-top: 1rem;
+  color: var(--color-ink-dark-dim);
   font-size: 0.92rem;
-  line-height: 1.68;
+  line-height: 1.7;
 }
 
-.aiSection__areas {
+.aiSection__stages {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-top: 0.6rem;
+  margin-top: 2.25rem;
+  border-top: 1px solid var(--color-line-dark);
+  border-bottom: 1px solid var(--color-line-dark);
 }
 
-.aiSection__area {
-  min-height: 140px;
-  padding: 1rem;
-  box-shadow: none;
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
+.aiSection__stages article {
+  min-height: 190px;
+  padding: 1.2rem;
+  border-right: 1px solid var(--color-line-dark);
 }
 
-.aiSection__area:hover,
-.aiSection__area:focus-within {
-  transform: translate3d(0, -2px, 0);
-  border-color: var(--color-line-strong);
+.aiSection__stages article:last-child {
+  border-right: 0;
 }
 
-.aiSection__area p {
+.aiSection__stageTop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aiSection__stageTop span {
+  color: var(--color-accent-strong);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+}
+
+.aiSection__stageTop i {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--color-line-dark-strong);
+}
+
+.aiSection__stages h3 {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.aiSection__stages p {
+  margin-top: 0.55rem;
+  color: var(--color-ink-dark-dim);
+  font-size: 0.8rem;
+  line-height: 1.58;
+}
+
+.aiSection__position {
+  grid-column: 8 / -1;
+  margin-top: 1.4rem;
+  padding: 1.2rem;
+  border: 1px solid var(--color-line-dark-strong);
+  background: var(--color-bg-soft);
+  color: var(--color-ink);
+}
+
+.aiSection__positionLabel {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.aiSection__position > p:last-child {
   margin-top: 0.75rem;
   color: var(--color-ink-dim);
-  font-size: 0.91rem;
-  line-height: 1.66;
+  font-size: 0.84rem;
+  line-height: 1.62;
 }
 
 @media (max-width: 900px) {
-  .aiSection__intro,
-  .aiSection__statement {
+  .aiSection__header,
+  .aiSection__position {
     grid-column: 1 / -1;
   }
+}
 
-  .aiSection__areas {
+@media (max-width: 700px) {
+  .aiSection__stages {
     grid-template-columns: 1fr;
   }
 
-  .aiSection__area {
+  .aiSection__stages article {
     min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-line-dark);
+  }
+
+  .aiSection__stages article:last-child {
+    border-bottom: 0;
   }
 }
-</style>
