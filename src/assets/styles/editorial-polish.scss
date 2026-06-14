@@ -6,82 +6,103 @@
   width: var(--content-width);
 }
 
-/* Hero: give the forest the visual weight instead of burying it under geometry. */
+/* Full-bleed forest hero */
 #app .portfolio .hero {
-  grid-template-columns: minmax(0, 0.82fr) minmax(430px, 1.18fr);
-  grid-template-rows: minmax(610px, auto) auto;
-  min-height: 720px;
-  background: #e9edef;
-}
-
-#app .portfolio .hero__copy {
-  padding: clamp(4.5rem, 8vw, 7.5rem) clamp(2rem, 5vw, 5rem) 3.5rem;
-}
-
-#app .portfolio .hero__copy h1 {
-  max-width: 11.5ch;
-  font-size: clamp(3rem, 5.25vw, 5.45rem);
-}
-
-#app .portfolio .hero__intro {
-  max-width: 48ch;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(700px, auto) auto;
+  min-height: 800px;
+  overflow: hidden;
+  background: #c7d0d5;
 }
 
 #app .portfolio .hero__visual {
-  min-height: 610px;
-  background: #aab4ba;
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 700px;
+  border: 0;
+  background: #7f8c94;
 }
 
 #app .portfolio .hero__forest {
-  inset: -2%;
+  inset: -3%;
   background:
-    linear-gradient(90deg, rgba(230, 235, 238, 0.08), transparent 28%),
-    linear-gradient(180deg, rgba(218, 225, 229, 0.04), rgba(7, 16, 24, 0.2)),
-    url('/assets/images/graykrowForest.png') center 72% / cover no-repeat;
-  filter: grayscale(0.58) saturate(0.58) brightness(0.9) contrast(0.94);
+    linear-gradient(90deg, rgba(7, 16, 24, 0.14), rgba(7, 16, 24, 0.035) 42%, transparent 72%),
+    linear-gradient(180deg, rgba(218, 225, 229, 0.02), rgba(7, 16, 24, 0.2)),
+    url('/assets/images/graykrowForest.png') center 70% / cover no-repeat;
+  filter: grayscale(0.46) saturate(0.66) brightness(0.86) contrast(1.01);
   opacity: 1;
-  transform: scale(1.025);
+  transform: scale(1.035);
 }
 
 #app .portfolio .hero__visual::after {
   background:
-    linear-gradient(90deg, rgba(232, 237, 239, 0.12), transparent 22%),
-    linear-gradient(180deg, transparent 68%, rgba(7, 16, 24, 0.28));
+    linear-gradient(90deg, rgba(7, 16, 24, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(7, 16, 24, 0.02), transparent 54%, rgba(7, 16, 24, 0.35));
 }
 
-#app .portfolio .hero__slab--rear {
-  top: 3.25rem;
-  right: -3rem;
-  width: 48%;
-  height: 43%;
-  opacity: 0.66;
+#app .portfolio .hero__copy {
+  position: relative;
+  z-index: 6;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  width: min(650px, calc(100% - clamp(3rem, 12vw, 11rem)));
+  margin-left: clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(1.75rem, 3vw, 2.7rem);
+  border: 1px solid rgba(23, 33, 42, 0.2);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 44%),
+    rgba(239, 243, 245, 0.88);
+  color: #17212a;
+  box-shadow:
+    0 2rem 5rem rgba(3, 9, 14, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(16px) saturate(82%);
 }
 
-#app .portfolio .hero__slab--front,
+#app .portfolio .hero__copy h1 {
+  max-width: 11ch;
+  font-size: clamp(3rem, 5.35vw, 5.65rem);
+}
+
+#app .portfolio .hero__intro {
+  max-width: 47ch;
+}
+
+#app .portfolio .hero__slab,
 #app .portfolio .hero__monogram {
   display: none;
 }
 
 #app .portfolio .hero__visual > p {
+  z-index: 7;
   top: auto;
-  right: 1rem;
-  bottom: 1rem;
-  padding: 0.45rem 0.6rem;
-  background: rgba(7, 16, 24, 0.62);
-  color: rgba(238, 242, 244, 0.78);
-  backdrop-filter: blur(8px);
+  right: 1.25rem;
+  bottom: 1.25rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgba(205, 216, 223, 0.18);
+  background: rgba(7, 16, 24, 0.7);
+  color: rgba(238, 242, 244, 0.82);
+  backdrop-filter: blur(10px);
 }
 
 #app .portfolio .hero__facts {
-  background: rgba(241, 244, 245, 0.92);
+  position: relative;
+  z-index: 8;
+  grid-column: 1;
+  grid-row: 2;
+  background: rgba(241, 244, 245, 0.96);
+  box-shadow: 0 -1.2rem 3rem rgba(3, 9, 14, 0.08);
 }
 
 #app .portfolio .hero__facts > div {
-  min-height: 96px;
+  min-height: 102px;
   padding-block: 1rem;
 }
 
-/* Profile: cleaner split and less empty vertical space. */
+/* Profile */
 #app .portfolio .profileSection__top {
   padding-block: clamp(3rem, 4.5vw, 4rem) 2rem;
 }
@@ -106,7 +127,7 @@
   padding: 1rem 1.1rem;
 }
 
-/* Projects: reduce visual noise and keep cards compact and comparable. */
+/* Projects */
 #app .portfolio .projectsSection {
   padding-block: clamp(3.25rem, 4.8vw, 4.5rem);
 }
@@ -140,7 +161,7 @@
   opacity: 0.55;
 }
 
-/* AI: make the ownership statement part of the section instead of a floating card. */
+/* AI */
 #app .portfolio .aiSection {
   padding-block: clamp(3.25rem, 4.8vw, 4.5rem);
 }
@@ -174,11 +195,11 @@
 }
 
 #app .portfolio .aiSection__position p {
-  margin-top: 0;
   max-width: 78ch;
+  margin-top: 0;
 }
 
-/* Playground: remove the stray oversized SD and simplify the cards. */
+/* Playground */
 #app .portfolio .playgroundSection {
   padding-block: clamp(3.25rem, 4.8vw, 4.5rem);
 }
@@ -201,7 +222,7 @@
   padding: 1rem 1.1rem;
 }
 
-/* Contact: align the three columns and reduce oversized dead space. */
+/* Contact */
 #app .portfolio .contactSection {
   padding-block: clamp(3.25rem, 4.8vw, 4.5rem);
 }
@@ -225,28 +246,34 @@
 }
 
 @media (max-width: 1120px) {
-  #app .portfolio .hero {
-    grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  #app .portfolio .hero__copy {
+    width: min(610px, calc(100% - 4rem));
+    margin-left: 2rem;
   }
 
   #app .portfolio .hero__copy h1 {
-    font-size: clamp(2.8rem, 5.8vw, 4.8rem);
+    font-size: clamp(2.8rem, 6vw, 5rem);
   }
 }
 
 @media (max-width: 920px) {
   #app .portfolio .hero {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 440px auto;
+    grid-template-rows: minmax(670px, auto) auto;
     min-height: 0;
   }
 
   #app .portfolio .hero__visual {
-    min-height: 440px;
+    min-height: 670px;
   }
 
   #app .portfolio .hero__forest {
-    background-position: center 72%;
+    background-position: 58% 70%;
+    filter: grayscale(0.48) saturate(0.62) brightness(0.82) contrast(1.02);
+  }
+
+  #app .portfolio .hero__copy {
+    width: min(620px, calc(100% - 3rem));
+    margin-inline: auto;
   }
 
   #app .portfolio .aiSection__position > div {
@@ -261,23 +288,36 @@
   }
 
   #app .portfolio .hero {
-    grid-template-rows: auto 350px auto;
-  }
-
-  #app .portfolio .hero__copy {
-    padding: 3.4rem 1.25rem 2.5rem;
+    grid-template-rows: minmax(620px, auto) auto;
   }
 
   #app .portfolio .hero__visual {
-    min-height: 350px;
+    min-height: 620px;
   }
 
-  #app .portfolio .hero__slab--rear {
-    width: 56%;
-    opacity: 0.48;
+  #app .portfolio .hero__forest {
+    background-position: 62% 72%;
+    filter: grayscale(0.5) saturate(0.58) brightness(0.78) contrast(1.03);
+  }
+
+  #app .portfolio .hero__copy {
+    width: calc(100% - 1.5rem);
+    margin-inline: auto;
+    padding: 1.4rem;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 42%),
+      rgba(239, 243, 245, 0.9);
+  }
+
+  #app .portfolio .hero__copy h1 {
+    font-size: clamp(2.35rem, 11.5vw, 3.65rem);
+  }
+
+  #app .portfolio .hero__actions {
+    gap: 0.55rem;
   }
 
   #app .portfolio .hero__facts > div {
-    min-height: 84px;
+    min-height: 86px;
   }
 }
