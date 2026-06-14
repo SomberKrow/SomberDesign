@@ -1,16 +1,16 @@
 <script setup>
-const flakes = Array.from({ length: 34 }, (_, index) => {
-  const lane = index / 34
+const flakes = Array.from({ length: 24 }, (_, index) => {
+  const lane = index / 24
   const wobble = index % 2 === 0 ? 1 : -1
 
   return {
     id: index,
-    left: `${(lane * 100 + (index * 7.3)) % 100}%`,
-    duration: `${18 + (index % 9) * 2.4}s`,
-    delay: `${-1 * ((index * 1.9) % 28)}s`,
-    size: `${1 + (index % 4) * 0.55}px`,
-    opacity: 0.12 + (index % 5) * 0.035,
-    drift: `${wobble * (2.5 + (index % 5) * 0.8)}vw`,
+    left: `${(lane * 100 + index * 6.1) % 100}%`,
+    duration: `${22 + (index % 8) * 2.7}s`,
+    delay: `${-1 * ((index * 2.15) % 30)}s`,
+    size: `${1 + (index % 3) * 0.5}px`,
+    opacity: 0.1 + (index % 4) * 0.025,
+    drift: `${wobble * (2.5 + (index % 4) * 0.75)}vw`,
   }
 })
 </script>
@@ -37,9 +37,9 @@ const flakes = Array.from({ length: 34 }, (_, index) => {
 .snowLayer {
   position: fixed;
   inset: 0;
-  z-index: -1;
-  pointer-events: none;
+  z-index: 70;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .snowLayer__flake {
@@ -49,7 +49,7 @@ const flakes = Array.from({ length: 34 }, (_, index) => {
   height: var(--flake-size);
   border-radius: 50%;
   background: rgba(237, 242, 246, var(--flake-opacity));
-  filter: blur(0.2px);
+  box-shadow: 0 0 1px rgba(9, 16, 22, 0.18);
   animation: snowfall var(--flake-duration) linear infinite;
   animation-delay: var(--flake-delay);
 }
@@ -59,8 +59,8 @@ const flakes = Array.from({ length: 34 }, (_, index) => {
     transform: translate3d(0, -8vh, 0);
   }
 
-  45% {
-    transform: translate3d(calc(var(--flake-drift) * 0.45), 48vh, 0);
+  48% {
+    transform: translate3d(calc(var(--flake-drift) * 0.46), 50vh, 0);
   }
 
   100% {
@@ -70,7 +70,7 @@ const flakes = Array.from({ length: 34 }, (_, index) => {
 
 @media (max-width: 900px) {
   .snowLayer {
-    opacity: 0.5;
+    opacity: 0.45;
   }
 }
 
